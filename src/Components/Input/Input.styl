@@ -1,0 +1,30 @@
+@import '../../Assets/variables.styl';
+
+.input-container
+  position relative
+  font normal 18px/20px Georgia, sans-serif
+  width 100%
+
+.input-container input
+  width 100%
+  margin 5px 0
+  padding 8px 10px
+  border-radius 5px
+  background-color transparent
+  border 1px solid $color-primary-bg
+  color $color-text-default
+
+.input-container p
+  padding-left 10px
+  margin-left 5px
+  font-size 16px
+  color $color-text-default
+  margin-bottom 5px
+
+.error
+  p, input
+    outline none
+    color $color-red
+  input
+    border 1px solid $color-red
+

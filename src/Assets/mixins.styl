@@ -1,0 +1,71 @@
+@import "./variables.styl";
+
+default-font()
+  font normal 19px/20px Georgia, sans-serif
+
+default-box()
+  padding $default-box-padding
+  border-radius $default-box-border-radius
+
+default-modal()
+    width 500px
+    font-size inherit
+    padding 1.25em
+    color #2a323f
+
+    > *
+
+      &:nth-of-type(1n + 2)
+        margin-top 2rem
+
+    &__header
+      font-size 1.8rem
+      font-weight bold
+      text-align left
+
+    &__content
+      font-size 1.6rem
+      line-height 1.3125
+      padding-top 1.25em
+      border-top 1px solid rgba(0, 0, 0, .15)
+
+    &__control
+      display flex
+      justify-content space-around
+      flex-wrap wrap
+
+default-comment()
+  font-size 1.6rem
+  font-family inherit
+  min-height 7.75em
+  width 100%
+  display block
+  border-radius 2px
+  color $color-text-default
+  background $color-primary-bg
+  border 2px solid $color-primary-bg
+  outline none
+  resize vertical
+  padding .625em .5em
+  overflow auto
+
+  &::placeholder
+    color $color-primary-text
+
+.fl_l
+  float left
+
+.fl_r
+  float right
+
+middle-align()
+  .middle_align
+    &:before
+      display inline-block
+      height 100%
+      vertical-align middle
+      content ""
+
+    & > *
+      display inline-block
+      vertical-align middle

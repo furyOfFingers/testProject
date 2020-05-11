@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import ErrorLog from '../../Components/ErrorLog/ErrorLog';
-import './LoginPageStyle.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
+import Button from '../../Components/Button/Button';
+import Input from '../../Components/Input/Input';
+import MainPage from '../MainPage/MainPage';
+import s from './LoginPage.styl';
 
 const LoginPage = ({}) => {
   const [loginOrSignin, setoginOrSignin] = useState(false);
   const [formState, setFormState] = useState({
-    login: "",
-    password: "",
-    confirmPassword: ""
+    login: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [isValue, setIsValue] = useState({
     login: false,
     password: false,
-    confirmPassword: false
+    confirmPassword: false,
   });
-
-  // const isPasswordSame = () => {
-  //   if(confirmPassword) {
-  //     if (password !== confirmPassword) return "Check password entry"
-  //   } else {
-  //     return "Insert Password"
-  //   }
-  // }
 
   /**
    * Метод проверки значения в инпутах.
@@ -33,85 +35,99 @@ const LoginPage = ({}) => {
       ...isValue,
       login: formState.login ? false : true,
       password: formState.password ? false : true,
-      confirmPassword: formState.confirmPassword ? false : true
-    })
-  }
+      confirmPassword: formState.confirmPassword ? false : true,
+    });
+  };
 
   /**
    * Метод проверки и отправки данных формы.
    */
   const handleSubmit = () => {
-    handleValueCheck()
-    // isPasswordSame()
-    console.log('handleCheck()', handleValueCheck())
-    window.location.href = '/MainPage/MainPage.tsx';
-
-  }
+    handleValueCheck();
+    console.log('handleCheck()', handleValueCheck());
+  };
 
   /**
    * Удаляет все введенные значения в инпуты.
    */
   const handleRemove = () => {
     setFormState({
-      login: "",
-      password: "",
-      confirmPassword: ""
-    })
-  }
+      login: '',
+      password: '',
+      confirmPassword: '',
+    });
+    setIsValue({
+      ...isValue,
+      login: false,
+      password: false,
+      confirmPassword: false,
+    });
+  };
 
   /**
    * Метод изменяющий значение инпутов формы.
    * @param {Event} event Объект инициатора события.
    */
   const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState({...formState, [event.currentTarget.name]: event.currentTarget.value})
-  }
+    setFormState({
+      ...formState,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
+  };
 
   return (
-    <Form className='col-lg-3 container login-page-container'>
-      <Form.Group controlId='formLogin'>
-        <Form.Control
+    <div className={s['login-page-container']}>
+      <div className={s['inputs-container']}>
+        <Input
           onChange={handleValueChange}
-          name="login"
+          name='login'
           value={formState.login}
-          type='text'
           placeholder='Enter login'
+          error={isValue.login}
+          showHint={isValue.login}
+          hint='Insert Login'
         />
-        <ErrorLog showError={isValue.login} text="Insert Login"/>
-      </Form.Group>
 
-      <Form.Group controlId='formPassword'>
-        <Form.Control
+        <Input
           onChange={handleValueChange}
-          name="password"
+          name='password'
           value={formState.password}
           type='password'
           placeholder='Enter password'
+          error={isValue.password}
+          showHint={isValue.password}
+          hint='Insert Password'
         />
-        <ErrorLog showError={isValue.password} text="Insert Password"/>
 
-        {loginOrSignin &&
-          <>
-            <Form.Control
-              onChange={handleValueChange}
-              name="confirmPassword"
-              value={formState.confirmPassword}
-              type='password'
-              placeholder='Confirm password'
-            />
-            <ErrorLog showError={isValue.confirmPassword} text="Insert Password"/>
-          </>
-        }
-      </Form.Group>
+        {loginOrSignin && (
+          <Input
+            onChange={handleValueChange}
+            name='confirmPassword'
+            value={formState.confirmPassword}
+            type='password'
+            placeholder='Confirm password'
+            error={isValue.confirmPassword}
+            showHint={isValue.confirmPassword}
+            hint='Insert Password'
+          />
+        )}
+      </div>
 
-      <Form.Group className="buttons-container" controlId='formButtons'>
-        <Button onClick={handleRemove} variant="outline-danger">Cancel</Button>
+      <div className={s['buttons-container']}>
+        <Button onClick={handleRemove} theme='red' text='Cancel' />
 
-        <Button onClick={handleSubmit} variant="outline-success">{loginOrSignin ? "Submit and Sign in" : "Submit and Log in"}</Button>
+        <Button
+          onClick={handleSubmit}
+          theme='green'
+          text={loginOrSignin ? 'Submit and Sign in' : 'Submit and Log in'}
+        />
 
-        <Button onClick={() => setoginOrSignin(!loginOrSignin)} variant="light">{loginOrSignin ? "Log in" : "Sign in"}</Button>
-      </Form.Group>
-    </Form>
+        <Button
+          onClick={() => setoginOrSignin(!loginOrSignin)}
+          text={loginOrSignin ? 'Log in' : 'Sign in'}
+        />
+      </div>
+    </div>
   );
 };
 

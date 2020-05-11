@@ -1,0 +1,39 @@
+@import '../../Assets/variables.styl';
+
+.button-style
+  padding 8px 10px
+  background-color transparent
+  margin 5px 10px
+  border none
+  font normal 18px/18px Georgia, sans-serif
+  transition color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out
+  border-radius 5px
+  outline none
+  &.theme
+    &__default
+      background-color $color-white-gray
+      color $color-text-default
+      &:hover
+        background-color $color-primary-bg
+        color $color-black
+
+    &__red
+      border 1px solid $color-red
+      color $color-red
+      &:hover
+        color $color-white
+        background-color $color-red
+
+    &__green
+      border 1px solid $color-green
+      color $color-green
+      &:hover
+        color $color-white
+        background-color $color-green
+
+  &.extra
+    &_mr-10
+      margin 10px
+
+
+

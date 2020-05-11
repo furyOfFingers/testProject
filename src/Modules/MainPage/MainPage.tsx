@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import ErrorLog from '../../Components/ErrorLog/ErrorLog';
+import Table from '../../Components/Table/Table';
 import './MainPage.css';
 
 const MainPage = ({}) => {
 
+  const handleLoginOut = () => {
+
+  }
+
   return (
-    <div>
-      mainPage
+    <div className='row container-fluid main-page-container'>
+      <div className='col-6 table-block'>
+        <Table/>
+      </div>
+
+      <div className='col-6'>
+        <Button onClick={handleLoginOut} variant="light">Logout</Button>
+      </div>
     </div>
   );
 };

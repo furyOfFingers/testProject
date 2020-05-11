@@ -33,10 +33,23 @@ module.exports = {
           loader: 'babel-loader'
         },
       },
-
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.styl$/,
+        use: [
+          { loader: "style-loader" },
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              // localIdentName: "[local]___[hash:base64:5]",
+            }
+          },
+          { loader: "stylus-loader" }
+        ]
       }
     ]
   },
