@@ -12,7 +12,10 @@ const App = ({}) => {
      {/* <BrowserRouter>
        <Navbar></Navbar>
      </BrowserRouter> */}
-     <LoginPage></LoginPage>
+
+
+     <MainPage></MainPage>
+     {/* <LoginPage></LoginPage> */}
     </div>
   );
 };

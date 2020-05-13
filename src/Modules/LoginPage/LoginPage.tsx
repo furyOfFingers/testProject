@@ -119,7 +119,7 @@ const LoginPage = ({}) => {
         <Button
           onClick={handleSubmit}
           theme='green'
-          text={loginOrSignin ? 'Submit and Sign in' : 'Submit and Log in'}
+          text={loginOrSignin ? 'Submit and Signin' : 'Submit and Login'}
         />
 
         <Button

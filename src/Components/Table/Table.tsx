@@ -1,117 +1,49 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import './Table.css';
+import s from './Table.styl';
 
+/**
+ * Свойства компонента Table.
+ */
 interface ITableProps {
-  /** Отображаемые данные */
-  data?: any;
+  /** Отображаемые данные компонента Table. */
+  data: any;
   /** Коллбэк на клик по строке. */
   onClick?: () => void;
+  /** Заголовок компонента Table. */
+  header: any;
 }
 
-const Table: React.FC<ITableProps> = ({}) => {
+/**
+ * Компонент Table
+ */
+const Table: React.FC<ITableProps> = ({ header, data }) => {
 
+  /** Рендерит заголовок таблицы. */
+  const renderTableHeader = (): any => {
+    return header.map((el: any, key: number) => {
+      return <th key={key}>{el}</th>;
+    });
+  };
 
-  const FirstTh = () => {
-
-  const sortTable = (n) => {
-    var table,
-      rows,
-      switching,
-      i,
-      x,
-      y,
-      shouldSwitch,
-      dir,
-      switchcount = 0;
-    table = document.getElementById("myTable");
-    switching = true;
-    //Set the sorting direction to ascending:
-    dir = "asc";
-    /*Make a loop that will continue until
-    no switching has been done:*/
-    while (switching) {
-      //start by saying: no switching is done:
-      switching = false;
-      rows = table.getElementsByTagName("TR");
-      /*Loop through all table rows (except the
-      first, which contains table headers):*/
-      for (i = 1; i < rows.length - 1; i++) { //Change i=0 if you have the header th a separate table.
-        //start by saying there should be no switching:
-        shouldSwitch = false;
-        /*Get the two elements you want to compare,
-        one from current row and one from the next:*/
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /*check if the two rows should switch place,
-        based on the direction, asc or desc:*/
-        if (dir == "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-      if (shouldSwitch) {
-        /*If a switch has been marked, make the switch
-        and mark that a switch has been done:*/
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        //Each time a switch is done, increase this count by 1:
-        switchcount++;
-      } else {
-        /*If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again.*/
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
-          switching = true;
-        }
-      }
-    }
-  }
-  return (
-    <th onClick = {sortTable}  scope='col'>#</th>
-  )
-}
+  /** Рендерит тело таблицы. */
+  const renderTableBode = () => {
+    return data.map((el: any, key: number) => {
+      return (
+        <tr className={s['data-body-table']} key={key}>
+          <td>{el.id}</td>
+          <td>{el.name}</td>
+          <td>{el.timeOfCreation}</td>
+        </tr>
+      );
+    });
+  };
 
   return (
-    <div className='col-6 container table-container'>
-      <table id='myTable' className='table table-striped'>
-        <thead>
-          <tr>
-            <FirstTh></FirstTh>
-            {/* <th onClick={sortTable(0)} scope='col'>#</th> */}
-            <th scope='col'>Test name</th>
-            <th scope='col'>Date</th>
-            <th scope='col'>Event</th>
-          </tr>
-        </thead>
+    <div className={s['table-container']}>
+      <table>
         <tbody>
-          <tr>
-            <th scope='row'>1</th>
-            <td> сделать ограничение в 20 символов</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope='row'>2</th>
-            <td>auto</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope='row'>3</th>
-            <td>hand</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          <tr>{renderTableHeader()}</tr>
+          {renderTableBode()}
         </tbody>
       </table>
     </div>

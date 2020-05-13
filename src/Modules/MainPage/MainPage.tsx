@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
 import Table from '../../Components/Table/Table';
-import './MainPage.css';
+import Button from '../../Components/Button/Button';
+import s from './MainPage.styl';
 
 const MainPage = ({}) => {
+  const tableHeader = ['#', 'Task name', 'Time of creation'];
+  const tableData = [
+    {id: 1, name: 'story', timeOfCreation: "20.03.2020"},
+    {id: 2, name: 'auto', timeOfCreation: "03.03.2020"},
+    {id: 3, name: 'dance', timeOfCreation: "10.04.2020"}
+  ];
 
-  const handleLoginOut = () => {
-
-  }
+  const handleLoginOut = () => {};
 
   return (
-    <div className='row container-fluid main-page-container'>
-      <div className='col-6 table-block'>
-        <Table/>
+    <div className={s['main-page-container']}>
+      <div className={s['table-container']}>
+        <Table data={tableData} header={tableHeader} />
       </div>
 
-      <div className='col-6'>
-        <Button onClick={handleLoginOut} variant="light">Logout</Button>
+      <div>
+        <Button onClick={handleLoginOut} text='Logout' />
       </div>
     </div>
   );
