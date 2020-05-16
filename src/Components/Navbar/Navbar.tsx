@@ -6,31 +6,30 @@ import MainPage from '../../Modules/MainPage/MainPage';
 import Button from '../Button';
 
 const NavigationBar = ({}) => {
-  function MPage() {
-    let history = useHistory();
-    let location = useLocation();
+  // function MPage() {
+  //   let history = useHistory();
+  //   let location = useLocation();
 
-    function handleClick() {
-      console.log('history', history);
-      console.log('location', location);
-      history.push('/mainPage');
-      // location.push("/mainPage");
-    }
+  //   function handleClick() {
+  //     console.log('history', history);
+  //     console.log('location', location);
+  //     history.push('/mainPage');
+  //     // location.push("/mainPage");
+  //   }
 
-    return (
-      <button type='button' onClick={handleClick}>
-        mainPage
-      </button>
-    );
-  }
+  //   return (
+  //     <button type='button' onClick={handleClick}>
+  //       mainPage
+  //     </button>
+  //   );
+  // }
 
   return (
     <div className={s['navbar-container']}>
       {/* <LoginPage></LoginPage> */}
 
       <Switch>
-
-        <Route path='/loginPage'>
+        <Route path='/'>
           <LoginPage />
         </Route>
 

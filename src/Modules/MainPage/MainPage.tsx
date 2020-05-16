@@ -11,17 +11,17 @@ const MainPage = ({}) => {
     {id: 3, name: 'dance', timeOfCreation: "10.04.2020"}
   ];
 
-  const handleLoginOut = () => {};
+  // const handleLoginOut = () => {};
 
   return (
     <div className={s['main-page-container']}>
       <div className={s['table-container']}>
         <Table data={tableData} header={tableHeader} />
       </div>
-
+{/* 
       <div>
         <Button onClick={handleLoginOut} text='Logout' />
-      </div>
+      </div> */}
     </div>
   );
 };

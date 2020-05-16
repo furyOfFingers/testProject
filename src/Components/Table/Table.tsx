@@ -18,6 +18,8 @@ interface ITableProps {
  */
 const Table: React.FC<ITableProps> = ({ header, data }) => {
 
+  //todo разобраться с классами и сортировкой элементов.
+
   /** Рендерит заголовок таблицы. */
   const renderTableHeader = (): any => {
     return header.map((el: any, key: number) => {
