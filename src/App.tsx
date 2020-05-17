@@ -14,8 +14,8 @@ const App = ({}) => {
       {/* <BrowserRouter>
         <Navbar></Navbar>
         </BrowserRouter> */}
-      {/* <Layout text='welcome, потом переделать на смену в зависимости от логирования'></Layout> */}
-      <WorkCode/>
+      <Layout text='welcome, потом переделать на смену в зависимости от логирования'></Layout>
+      {/* <WorkCode/> */}
 
       {/* <MainPage></MainPage> */}
       {/* <LoginPage></LoginPage> */}

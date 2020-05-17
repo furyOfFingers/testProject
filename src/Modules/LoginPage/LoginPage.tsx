@@ -10,11 +10,22 @@ import {
 } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import Input from '../../Components/Input/Input';
+import { connect } from 'react-redux';
 import MainPage from '../MainPage/MainPage';
+import {IAppState} from '../../Types/Types';
+import {hideLoginForm, changePath} from '../../redux/actions';
 import s from './LoginPage.styl';
 
-const LoginPage = ({}) => {
-  const [loginOrSignin, setoginOrSignin] = useState(false);
+interface ILoginPageProps {
+  /** Признак отображения значения Signin или Login */
+  isSigninOrLogin: boolean;
+  /** Метод изменяющий признак отображения формы авторизации. */
+  hideLoginForm: () => void
+  /** Метод изменяющий path. */
+  changePath: (path: string) => void
+}
+
+const LoginPage = ({...props}: ILoginPageProps) => {
   const [formState, setFormState] = useState({
     login: '',
     password: '',
@@ -44,7 +55,8 @@ const LoginPage = ({}) => {
    */
   const handleSubmit = () => {
     handleValueCheck();
-    console.log('handleCheck()', handleValueCheck());
+    // props.hideLoginForm()
+    // props.changePath('mainPage')
   };
 
   /**
@@ -99,7 +111,7 @@ const LoginPage = ({}) => {
           hint='Insert Password'
         />
 
-        {loginOrSignin && (
+        {props.isSigninOrLogin && (
           <Input
             onChange={handleValueChange}
             name='confirmPassword'
@@ -119,16 +131,21 @@ const LoginPage = ({}) => {
         <Button
           onClick={handleSubmit}
           theme='green'
-          text={loginOrSignin ? 'Submit and Signin' : 'Submit and Login'}
-        />
-
-        <Button
-          onClick={() => setoginOrSignin(!loginOrSignin)}
-          text={loginOrSignin ? 'Log in' : 'Sign in'}
+          text={props.isSigninOrLogin ? 'Submit and Signin' : 'Submit and Login'}
         />
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+const mapDispatchToProps = {
+  hideLoginForm,
+  changePath
+};
+
+const mapStateToProps = (state: IAppState) => ({
+  isSigninOrLogin: state.authorization.isSigninOrLogin,
+  // isLoginForm: state.authorization.isLoginForm
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

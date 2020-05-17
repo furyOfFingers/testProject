@@ -4,49 +4,40 @@ import s from './Navbar.styl';
 import LoginPage from '../../Modules/LoginPage/LoginPage';
 import MainPage from '../../Modules/MainPage/MainPage';
 import Button from '../Button';
+import { IAppState } from 'Types/Types';
+import { connect } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-const NavigationBar = ({}) => {
-  // function MPage() {
-  //   let history = useHistory();
-  //   let location = useLocation();
-
-  //   function handleClick() {
-  //     console.log('history', history);
-  //     console.log('location', location);
-  //     history.push('/mainPage');
-  //     // location.push("/mainPage");
-  //   }
-
-  //   return (
-  //     <button type='button' onClick={handleClick}>
-  //       mainPage
-  //     </button>
-  //   );
-  // }
-
+const NavigationBar = ({ ...props }) => {
   return (
-    <div className={s['navbar-container']}>
-      {/* <LoginPage></LoginPage> */}
+    <BrowserRouter>
+      <div className={s['navbar-container']}>
+        <Switch>
+          <Route path='/'>
+            {props.isLoginForm && <LoginPage></LoginPage>}
+          </Route>
 
-      <Switch>
-        <Route path='/'>
-          <LoginPage />
-        </Route>
+          <Route path='/mainPage'>
+            <MainPage />
+          </Route>
 
-        <Route path='/mainPage'>
-          <MainPage />
-        </Route>
-
-        {/* <Route path='/InputForm/InputForm'>
+          {/* <Route path='/InputForm/InputForm'>
           <InputForm />
         </Route>
 
         <Route path='/ConverterPage/ConverterPage'>
           <ConverterPage />
         </Route> */}
-      </Switch>
-    </div>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 };
 
-export default NavigationBar;
+const mapDispatchToProps = {};
+
+const mapStateToProps = (state: IAppState) => ({
+  isLoginForm: state.authorization.isLoginForm,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

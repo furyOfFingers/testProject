@@ -29,3 +29,25 @@ export interface InitialState {
 };
 
 export type IFieldActionTypes = IFirstNameProps | ISecondNameProps | InitialState;
+
+/**
+ * Модель ветки редакс-стейта модуля работы с пользователем.
+ *
+ * @prop {boolean} isSigninOrLogin Признак отображения значения Signin или Login.
+ * @prop {boolean} isLoginForm Признак отображения формы авторизации.
+ */
+export interface IAppState {
+  authorization: {
+    isSigninOrLogin: boolean
+    isLoginForm: boolean;
+  };
+}
+
+// /**
+//  * Модель ветки редакс-стейта модуля работы с пользователем.
+//  *
+//  * @prop {IAsyncData<IUser>} user Данные пользователя.
+//  */
+// export interface IUserInfoReduxState {
+//   user: IAsyncData<IUser>;
+// }
