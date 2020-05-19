@@ -56,8 +56,19 @@ const LoginPage = ({...props}: ILoginPageProps) => {
   const handleSubmit = () => {
     handleValueCheck();
     // props.hideLoginForm()
-    // props.changePath('mainPage')
+    // let history = useHistory();
+    // history.push('mainPage')
+    props.changePath('d')
   };
+
+  function AuthButton() {
+    let history = useHistory();
+
+    return true &&
+        <button onClick={() =>
+          history.push('/mainPage')}
+        >Sign out</button>
+  }
 
   /**
    * Удаляет все введенные значения в инпуты.
@@ -127,7 +138,7 @@ const LoginPage = ({...props}: ILoginPageProps) => {
 
       <div className={s['buttons-container']}>
         <Button onClick={handleRemove} theme='red' text='Cancel' />
-
+        <AuthButton/>
         <Button
           onClick={handleSubmit}
           theme='green'

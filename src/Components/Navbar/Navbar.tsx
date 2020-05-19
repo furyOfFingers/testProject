@@ -1,19 +1,21 @@
 import React from 'react';
-import { Switch, Route, Link, useHistory, useLocation } from 'react-router-dom';
+import { Switch, BrowserRouter, Router, Route, Link, useHistory, useLocation } from 'react-router-dom';
 import s from './Navbar.styl';
 import LoginPage from '../../Modules/LoginPage/LoginPage';
 import MainPage from '../../Modules/MainPage/MainPage';
 import Button from '../Button';
 import { IAppState } from 'Types/Types';
 import { connect } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import Layout from "../Layout/Layout";
+import history from "../../store/history";
 
 const NavigationBar = ({ ...props }) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <div className={s['navbar-container']}>
+        <Layout text='welcome, потом переделать на смену в зависимости от логирования'></Layout>
         <Switch>
-          <Route path='/'>
+          <Route exact path='/'>
             {props.isLoginForm && <LoginPage></LoginPage>}
           </Route>
 

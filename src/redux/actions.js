@@ -1,4 +1,5 @@
 import { SIGNIN_OR_LOGIN, HIDE_LOGIN_FORM, CHANGE_PATH } from './types';
+import { push } from 'connected-react-router'
 
 /** Диспатчит экшен для изменения значения Signin или Login. */
 export function changeButtonAuth() {

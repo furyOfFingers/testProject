@@ -31,7 +31,7 @@ const Layout = ({ text, ...props }: ILayoutProps) => {
 
       <div className={s['layout-body']}>
         {/* <BrowserRouter > */}
-          <NavigationBar />
+          {/* <NavigationBar /> */}
         {/* </BrowserRouter > */}
         {/* {props.isLoginForm && <LoginPage></LoginPage>} */}
       </div>

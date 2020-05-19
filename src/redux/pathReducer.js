@@ -7,7 +7,7 @@ const initialState = {
 export const pathReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_PATH:
-      return { ...state, path: state.path.concat([action.payload]) };
+      return { ...state, path: action.payload };
     default:
       return state;
   }
