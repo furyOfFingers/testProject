@@ -7,7 +7,7 @@ import Button from '../Button';
 import { IAppState } from 'Types/Types';
 import { connect } from 'react-redux';
 import Layout from "../Layout/Layout";
-import history from "../../store/history";
+import history from "../../Store/History";
 
 const NavigationBar = ({ ...props }) => {
   return (

@@ -35,12 +35,30 @@ export type IFieldActionTypes = IFirstNameProps | ISecondNameProps | InitialStat
  *
  * @prop {boolean} isSigninOrLogin Признак отображения значения Signin или Login.
  * @prop {boolean} isLoginForm Признак отображения формы авторизации.
+ * @prop {boolean} isAuth Признак авторизации.
+ * @prop {boolean} showLoader Признак отрисовки лоадера.
+ * @prop {string} loaderText Текст лоадера.
+ * @prop {string} errorText Текст ошибки компонента layout.
+ * @prop {boolean} showError Признак отображения ошибки компонента layout.
+ * @prop {boolean} checked Флаг чекбокса.
  */
 export interface IAppState {
   authorization: {
     isSigninOrLogin: boolean
     isLoginForm: boolean;
+    isAuth: boolean;
   };
+  loader: {
+    showLoader: boolean,
+    loaderText: string
+  };
+  layout: {
+    errorText: string;
+    showError: boolean;
+  };
+  checkbox: {
+    checked: boolean;
+  }
 }
 
 // /**

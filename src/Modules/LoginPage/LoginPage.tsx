@@ -1,41 +1,36 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation,
-} from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import Input from '../../Components/Input/Input';
 import { connect } from 'react-redux';
-import MainPage from '../MainPage/MainPage';
-import {IAppState} from '../../Types/Types';
-import {hideLoginForm, changePath} from '../../redux/actions';
+import { IAppState } from '../../Types/Types';
+import { signinAction, loginAction } from '../../Redux/Authorization/AuthorizationActions';
+import { changePathAction } from '../../Redux/Router/RouterActions';
 import s from './LoginPage.styl';
+import Checkbox from "../../Components/Checkbox/Checkbox";
 
 interface ILoginPageProps {
   /** Признак отображения значения Signin или Login */
   isSigninOrLogin: boolean;
-  /** Метод изменяющий признак отображения формы авторизации. */
-  hideLoginForm: () => void
   /** Метод изменяющий path. */
-  changePath: (path: string) => void
+  changePathAction: (path: string) => void;
+  /** Метод регистрации. */
+  signinAction: (formState: any) => void;
+  /** Метод регистрации. */
+  loginAction: (formState: any) => void;
 }
 
-const LoginPage = ({...props}: ILoginPageProps) => {
+const LoginPage = ({ ...props }: ILoginPageProps) => {
   const [formState, setFormState] = useState({
     login: '',
     password: '',
     confirmPassword: '',
+    checkbox: false
   });
 
   const [isValue, setIsValue] = useState({
     login: false,
     password: false,
-    confirmPassword: false,
+    confirmPassword: false
   });
 
   /**
@@ -46,7 +41,7 @@ const LoginPage = ({...props}: ILoginPageProps) => {
       ...isValue,
       login: formState.login ? false : true,
       password: formState.password ? false : true,
-      confirmPassword: formState.confirmPassword ? false : true,
+      confirmPassword: formState.confirmPassword ? false : true
     });
   };
 
@@ -55,20 +50,16 @@ const LoginPage = ({...props}: ILoginPageProps) => {
    */
   const handleSubmit = () => {
     handleValueCheck();
-    // props.hideLoginForm()
-    // let history = useHistory();
-    // history.push('mainPage')
-    props.changePath('d')
+    if (!props.isSigninOrLogin) {
+      // if (isValue.login || isValue.password) {
+        props.loginAction(formState);
+      // }
+    } else {
+      // if (isValue.login || isValue.password || isValue.confirmPassword) {
+        props.signinAction(formState);
+      // }
+    }
   };
-
-  function AuthButton() {
-    let history = useHistory();
-
-    return true &&
-        <button onClick={() =>
-          history.push('/mainPage')}
-        >Sign out</button>
-  }
 
   /**
    * Удаляет все введенные значения в инпуты.
@@ -78,12 +69,13 @@ const LoginPage = ({...props}: ILoginPageProps) => {
       login: '',
       password: '',
       confirmPassword: '',
+      checkbox: false
     });
     setIsValue({
       ...isValue,
       login: false,
       password: false,
-      confirmPassword: false,
+      confirmPassword: false
     });
   };
 
@@ -97,6 +89,13 @@ const LoginPage = ({...props}: ILoginPageProps) => {
       [event.currentTarget.name]: event.currentTarget.value,
     });
   };
+
+const handleCheckboxChange = () => {
+  setFormState({
+    ...formState,
+    checkbox: !formState.checkbox,
+  });
+}
 
   return (
     <div className={s['login-page-container']}>
@@ -123,26 +122,33 @@ const LoginPage = ({...props}: ILoginPageProps) => {
         />
 
         {props.isSigninOrLogin && (
-          <Input
-            onChange={handleValueChange}
-            name='confirmPassword'
-            value={formState.confirmPassword}
-            type='password'
-            placeholder='Confirm password'
-            error={isValue.confirmPassword}
-            showHint={isValue.confirmPassword}
-            hint='Insert Password'
-          />
+          <>
+            <Input
+              onChange={handleValueChange}
+              name='confirmPassword'
+              value={formState.confirmPassword}
+              type='password'
+              placeholder='Confirm password'
+              error={isValue.confirmPassword}
+              showHint={isValue.confirmPassword}
+              hint='Insert Password'
+            />
+
+            <Checkbox
+              onChange={handleCheckboxChange}
+              text='are you admin?'
+              checked={formState.checkbox}
+            />
+          </>
         )}
       </div>
 
       <div className={s['buttons-container']}>
         <Button onClick={handleRemove} theme='red' text='Cancel' />
-        <AuthButton/>
         <Button
           onClick={handleSubmit}
           theme='green'
-          text={props.isSigninOrLogin ? 'Submit and Signin' : 'Submit and Login'}
+          text={props.isSigninOrLogin ? 'Signin' : 'Login'}
         />
       </div>
     </div>
@@ -150,13 +156,14 @@ const LoginPage = ({...props}: ILoginPageProps) => {
 };
 
 const mapDispatchToProps = {
-  hideLoginForm,
-  changePath
+  changePathAction,
+  signinAction,
+  loginAction,
 };
 
 const mapStateToProps = (state: IAppState) => ({
   isSigninOrLogin: state.authorization.isSigninOrLogin,
   // isLoginForm: state.authorization.isLoginForm
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

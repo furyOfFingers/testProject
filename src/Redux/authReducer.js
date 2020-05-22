@@ -1,8 +1,9 @@
-import { SIGNIN_OR_LOGIN, HIDE_LOGIN_FORM, SHOW_LOGIN_FORM } from './types';
+import { SIGNIN_OR_LOGIN, HIDE_LOGIN_FORM, SHOW_LOGIN_FORM, LOGOUT, LOGIN_SUCCESS } from './types';
 
 const initialState = {
   isSigninOrLogin: false,
-  isLoginForm: true
+  isLoginForm: true,
+  isAuth: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -13,6 +14,10 @@ export const authReducer = (state = initialState, action) => {
       return { ...state, isLoginForm: false };
     case SHOW_LOGIN_FORM:
       return { ...state, isLoginForm: true };
+    case LOGIN_SUCCESS:
+      return { ...state, isAuth: true };
+    case LOGOUT:
+      return { ...state, isAuth: false };
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import {
   handleCancel,
   changeFirstName,
   changeSecondName,
-} from '../store/actions';
+} from '../Store/actions';
 import { IFieldState, IFirstNameProps, ISecondNameProps } from '../Types/Types';
 import Button from './Button';
 import '../styles/index.css';

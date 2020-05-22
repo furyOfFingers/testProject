@@ -7,16 +7,17 @@ import Layout from './Components/Layout/Layout';
 import Input from './Components/Input/Input';
 import MainPage from './Modules/MainPage/MainPage';
 import WorkCode from './Components/WorkCode/WorkCode';
+import { hot } from 'react-hot-loader/root';
 
 const App = ({}) => {
   return (
     <div>
       {/* <BrowserRouter>
         <Navbar></Navbar>
-        </BrowserRouter> */}
+      </BrowserRouter> */}
       {/* <Layout text='welcome, потом переделать на смену в зависимости от логирования'></Layout> */}
       {/* <WorkCode/> */}
-      <Navbar></Navbar>
+      <Layout errorText='кaфывsdк' text = 'hello there' />
 
       {/* <MainPage></MainPage> */}
       {/* <LoginPage></LoginPage> */}
@@ -24,4 +25,4 @@ const App = ({}) => {
   );
 };
 
-export default App;
+export default hot(App);
