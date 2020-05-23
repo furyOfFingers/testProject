@@ -3,10 +3,13 @@ import Button from '../../Components/Button/Button';
 import Input from '../../Components/Input/Input';
 import { connect } from 'react-redux';
 import { IAppState } from '../../Types/Types';
-import { signinAction, loginAction } from '../../Redux/Authorization/AuthorizationActions';
+import {
+  signinAction,
+  loginAction,
+} from '../../Redux/Authorization/AuthorizationActions';
 import { changePathAction } from '../../Redux/Router/RouterActions';
 import s from './LoginPage.styl';
-import Checkbox from "../../Components/Checkbox/Checkbox";
+import Checkbox from '../../Components/Checkbox/Checkbox';
 
 interface ILoginPageProps {
   /** Признак отображения значения Signin или Login */
@@ -20,44 +23,75 @@ interface ILoginPageProps {
 }
 
 const LoginPage = ({ ...props }: ILoginPageProps) => {
+  const [disabled, setDisabled] = useState(true);
+  const [isPasswordsFieldSOk, setisPasswordsFieldSOk] = useState({
+    password: false,
+    confirmPassword: false,
+  });
   const [formState, setFormState] = useState({
     login: '',
     password: '',
     confirmPassword: '',
-    checkbox: false
+    checkbox: false,
   });
 
-  const [isValue, setIsValue] = useState({
-    login: false,
-    password: false,
-    confirmPassword: false
-  });
 
   /**
-   * Метод проверки значения в инпутах.
+   * Метод проверки значения в Input.
    */
-  const handleValueCheck = () => {
-    setIsValue({
-      ...isValue,
-      login: formState.login ? false : true,
-      password: formState.password ? false : true,
-      confirmPassword: formState.confirmPassword ? false : true
-    });
+  const onBlurValueCheck = () => {
+    if (!props.isSigninOrLogin) {
+      if (formState.login && formState.password) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    } else {
+      if (formState.login && formState.password && formState.confirmPassword) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    }
+
+    if(props.isSigninOrLogin) {
+      onBlurPassConfirmCheck();
+      // onBlurHandlePassMinValueCheck();
+    }
   };
+
+  /** Проверяет поле password на минимальное количество символов. */
+  const onBlurHandlePassMinValueCheck = () => {
+    if(formState.password.length < 6) {
+      setDisabled(false);
+      setisPasswordsFieldSOk({...isPasswordsFieldSOk, password: false});
+    } else {
+      setDisabled(true);
+      setisPasswordsFieldSOk({...isPasswordsFieldSOk, password: true});
+    }
+  }
+
+  /** Проверяет поля password и confirmPassword на схожесть. */
+  const onBlurPassConfirmCheck = () => {
+    if(formState.login && formState.password && formState.confirmPassword) {
+      if(formState.password === formState.confirmPassword) {
+        setDisabled(false);
+        setisPasswordsFieldSOk({...isPasswordsFieldSOk, confirmPassword: false});
+      } else {
+        setDisabled(true);
+        setisPasswordsFieldSOk({...isPasswordsFieldSOk, confirmPassword: true});
+      }
+    }
+  }
 
   /**
    * Метод проверки и отправки данных формы.
    */
   const handleSubmit = () => {
-    handleValueCheck();
     if (!props.isSigninOrLogin) {
-      // if (isValue.login || isValue.password) {
-        props.loginAction(formState);
-      // }
+      props.loginAction(formState);
     } else {
-      // if (isValue.login || isValue.password || isValue.confirmPassword) {
-        props.signinAction(formState);
-      // }
+      props.signinAction(formState);
     }
   };
 
@@ -69,14 +103,10 @@ const LoginPage = ({ ...props }: ILoginPageProps) => {
       login: '',
       password: '',
       confirmPassword: '',
-      checkbox: false
+      checkbox: false,
     });
-    setIsValue({
-      ...isValue,
-      login: false,
-      password: false,
-      confirmPassword: false
-    });
+    setisPasswordsFieldSOk({...isPasswordsFieldSOk, confirmPassword: false})
+    setDisabled(true);
   };
 
   /**
@@ -88,50 +118,52 @@ const LoginPage = ({ ...props }: ILoginPageProps) => {
       ...formState,
       [event.currentTarget.name]: event.currentTarget.value,
     });
+    onBlurValueCheck();
   };
 
-const handleCheckboxChange = () => {
-  setFormState({
-    ...formState,
-    checkbox: !formState.checkbox,
-  });
-}
+  /** Изменяет значение checkbox. */
+  const handleCheckboxChange = () => {
+    setFormState({
+      ...formState,
+      checkbox: !formState.checkbox,
+    });
+  };
 
   return (
     <div className={s['login-page-container']}>
       <div className={s['inputs-container']}>
         <Input
           onChange={handleValueChange}
-          name='login'
+          onBlur={onBlurValueCheck}
           value={formState.login}
+          name='login'
           placeholder='Enter login'
-          error={isValue.login}
-          showHint={isValue.login}
-          hint='Insert Login'
         />
 
         <Input
           onChange={handleValueChange}
-          name='password'
+          onBlur={onBlurValueCheck}
           value={formState.password}
+          error={isPasswordsFieldSOk.password}
+          showHint={isPasswordsFieldSOk.password}
+          hint='Min 6 symbol'
+          name='password'
           type='password'
           placeholder='Enter password'
-          error={isValue.password}
-          showHint={isValue.password}
-          hint='Insert Password'
         />
 
         {props.isSigninOrLogin && (
           <>
             <Input
               onChange={handleValueChange}
-              name='confirmPassword'
+              onBlur={onBlurPassConfirmCheck}
               value={formState.confirmPassword}
+              error={isPasswordsFieldSOk.confirmPassword}
+              showHint={isPasswordsFieldSOk.confirmPassword}
+              hint='Password mismatch'
+              name='confirmPassword'
               type='password'
               placeholder='Confirm password'
-              error={isValue.confirmPassword}
-              showHint={isValue.confirmPassword}
-              hint='Insert Password'
             />
 
             <Checkbox
@@ -146,6 +178,7 @@ const handleCheckboxChange = () => {
       <div className={s['buttons-container']}>
         <Button onClick={handleRemove} theme='red' text='Cancel' />
         <Button
+          disabled={disabled}
           onClick={handleSubmit}
           theme='green'
           text={props.isSigninOrLogin ? 'Signin' : 'Login'}

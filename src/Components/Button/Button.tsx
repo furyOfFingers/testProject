@@ -28,7 +28,12 @@ const Button = ({
   extra,
   theme = 'default',
 }: IButtonProps) => {
-  const style = c(s['button-style'], s[`theme__${theme}`], s[`extra_${extra}`]);
+  const style = c(
+    s['button-style'],
+    s[`theme__${theme}`],
+    s[`extra_${extra}`],
+    { [s['disabled']]: disabled }
+  );
 
   return (
     <button onClick={onClick} disabled={disabled} className={style}>

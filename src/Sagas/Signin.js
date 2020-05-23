@@ -15,10 +15,10 @@ function* Signin(data) {
   try {
     const path = '/mainpage';
     console.log('response Signin', response);
-    if(response.data.id) {
-      yield put(push(path));
-      authSuccessAction()
-    }
+    // if(response.data.id) {
+    //   yield put(push(path));
+    //   authSuccessAction()
+    // }
   } catch (err) {
     // return { err: true, result: err }
     // console.log(err, 'error')
@@ -41,7 +41,7 @@ const axiosSignin = (data) => {
       username: data.authData.login,
       password: data.authData.password,
       password_confirmation: data.authData.confirmPassword,
-      is_admin: data.authData.confirmPassword
+      is_admin: data.authData.checkbox
     },
   });
 };

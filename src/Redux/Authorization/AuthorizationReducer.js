@@ -1,11 +1,19 @@
-import { SIGNIN_OR_LOGIN, HIDE_LOGIN_FORM, LOGOUT, LOGIN_SUCCESS, AUTH_SUCCESS/* , ERROR_HANDLE, SUCCESS_HANDLE */ } from './Consts';
+import {
+  SIGNIN_OR_LOGIN,
+  HIDE_LOGIN_FORM,
+  LOGOUT,
+  LOGIN_SUCCESS,
+  AUTH_SUCCESS,
+  SUCCESS_HANDLE,
+  SIGN_IN
+} from './Consts';
 
 const initialState = {
   isSigninOrLogin: false,
   isLoginForm: true,
   isAuth: false,
-  // error: null,
-  // success: null
+  error: null,
+  success: null,
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -16,12 +24,10 @@ export const authorizationReducer = (state = initialState, action) => {
       return { ...state, isAuth: true };
     case LOGOUT:
       return { ...state, isAuth: false };
-    // case ERROR_HANDLE:
-    //   console.log('ERROR_HANDLE', action.payload)
-    //   return { ...state, error: action.payload };
-    // case SUCCESS_HANDLE:
-    //   console.log('SUCCESS_HANDLE', action.payload)
-    //   return { ...state, success: action.payload };
+    case SUCCESS_HANDLE:
+      return { ...state, success: action.payload };
+    case SIGN_IN:
+      return { ...state, success: action.payload };
     default:
       return state;
   }

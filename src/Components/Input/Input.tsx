@@ -25,6 +25,8 @@ export interface IInputProps {
   showHint?: boolean;
   /** Тип компонента input. */
   type?: string;
+  /** onBlur компонента input. */
+  onBlur?: () => void;
 }
 
 /**
@@ -39,7 +41,8 @@ const Input = ({
   name,
   value,
   showHint,
-  type = 'text'
+  type = 'text',
+  onBlur
 }: IInputProps) => {
   const style = c(s['input-container'], { [s['error']]: error });
 
@@ -52,6 +55,7 @@ const Input = ({
         placeholder={placeholder}
         disabled={disabled}
         type={type}
+        onBlur={onBlur}
       />
       {showHint && <p>{hint}</p>}
     </div>
