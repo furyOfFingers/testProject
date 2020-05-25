@@ -2,9 +2,10 @@ import React from 'react';
 import Button from '../../Components/Button/Button';
 import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import LoginPage from '../../Modules/LoginPage/LoginPage';
+import LoginPage from '../../Modules/Authorization/LoginPage/LoginPage';
 import NavigationBar from '../Navbar/Navbar';
 import { changeButtonAuthAction, logoutAction } from '../../Redux/Authorization/AuthorizationActions';
+import {changePathAction} from "../../Redux/Router/RouterActions";
 import { IAppState } from '../../Types/Types';
 import s from './Layout.styl';
 import MainRouter from '../../Router/MainRouter';
@@ -30,9 +31,23 @@ interface ILayoutProps {
   showLoader: boolean,
   /** Текст отображающийся в лоайдере. */
   loaderText: string
+  /**  */
+  changePathAction?: any;
 }
 
+
 const Layout = ({ text, ...props }: ILayoutProps) => {
+
+  const signinOrLoginPage = () => {
+    props.changeButtonAuthAction()
+    // props.logoutAction()
+    if (!props.isSigninOrLogin) {
+      props.changePathAction('/signin')
+    } else {
+      props.changePathAction('/')
+    }
+  }
+
   return (
     <div className={s['layout-container']}>
       <div className={s['layout-header']}>
@@ -41,16 +56,12 @@ const Layout = ({ text, ...props }: ILayoutProps) => {
         <div>
           <Button
             text={!props.isSigninOrLogin ? 'Signin' : 'Login'}
-            onClick={
-              // props.isAuth ?
-              props.changeButtonAuthAction 
-              // props.logoutAction
-            }
+            onClick={signinOrLoginPage}
           />
         </div>
       </div>
 
-      {props.showError &&
+      {props.errorText &&
         <div className={s['layout-header-error']}>
           <span>{props.errorText}</span>
         </div>
@@ -73,6 +84,7 @@ const Layout = ({ text, ...props }: ILayoutProps) => {
 
 const mapDispatchToProps = {
   changeButtonAuthAction,
+  changePathAction,
   logoutAction
 };
 

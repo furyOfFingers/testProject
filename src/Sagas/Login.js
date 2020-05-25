@@ -5,11 +5,13 @@ import { ERROR_HANDLER_LOGIN } from '../Redux/ErrorHandler/Authorization/Consts'
 import { push } from 'connected-react-router';
 import { watchLogout } from './Logout';
 import { baseUrl } from './Sagas';
-import { loginErrorHandlerAction } from '../Redux/ErrorHandler/Authorization/Actions';
+// import { loginErrorHandlerAction } from '../Redux/ErrorHandler/Authorization/Actions';
 import {
   showLoaderAction,
   hideLoaderAction,
 } from '../Redux/Loader/LoaderActions';
+import { showLayoutErrorAction, hideErrorAction } from "../Redux/Layout/LayoutActions";
+import {authSuccessAction} from "../Redux/Authorization/AuthorizationActions";
 
 // function* Login(data) {
 //   try {
@@ -49,14 +51,15 @@ function* Login(data) {
     yield put(showLoaderAction());
     const response = yield call(fetchLogin, data);
     console.log(response, 'response');
-    if (response.error) {
-      console.log('dem')
-      // yield put(push(path));
-      // yield put({ type: ERROR_HANDLER_LOGIN, err });
-    }
+    // if (response.error) {
+      yield put(showLayoutErrorAction(response.error));
+    // }
+    // yield put(push(path));
     yield put(hideLoaderAction());
+    yield put(authSuccessAction());
   } catch (err) {
     yield put(hideLoaderAction());
+    // yield put(loginErrorHandlerAction(err));
     console.log(err, 'err');
   }
 }
@@ -65,8 +68,10 @@ async function fetchLogin(data) {
   const response = await fetch(`${baseUrl}signin`, {
     method: 'post',
     data: {
-      username: data.authData.login,
-      password: data.authData.password,
+      username: 'username10',
+      password: '123456'
+      // username: data.authData.login,
+      // password: data.authData.password
     },
   });
   return await response.json();

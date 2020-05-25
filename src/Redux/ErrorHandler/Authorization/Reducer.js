@@ -7,7 +7,7 @@ const initialState = {
 const loginErrorHandlerReducer = (state = initialState, action) => {
   switch (action.type) {
     case ERROR_HANDLER_LOGIN:
-      return { ...state, errorHandlerText: action.payload };
+      return { ...state, errorHandlerText: action.error };
     default:
       return state;
   }

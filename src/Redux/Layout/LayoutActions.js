@@ -1,20 +1,26 @@
-import { SHOW_ERROR, HIDE_ERROR, CHANGE_ERROR_TEXT } from './Consts';
+import { SHOW_ERROR, HIDE_ERROR, SHOW_ERROR_TEXT } from './Consts';
 
 export function showErrorAction() {
   return {
-    type: SHOW_LOADER
+    type: SHOW_ERROR
   };
 }
 
 export function hideErrorAction() {
   return {
-    type: HIDE_LOADER
+    type: HIDE_ERROR
   };
 }
 
-export function errorTextAction(text) {
-  return {
-    type: CHANGE_LOADER_TEXT,
-    text: text
-  };
+export function showLayoutErrorAction(text) {
+  return dispatch => {
+    dispatch({
+      type: SHOW_ERROR_TEXT,
+      text: text
+    })
+
+    setTimeout(() => {
+      dispatch(hideErrorAction())
+    }, 3000)
+  }
 }

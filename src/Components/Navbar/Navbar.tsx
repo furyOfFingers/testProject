@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, BrowserRouter, Router, Route, Link, useHistory, useLocation } from 'react-router-dom';
 import s from './Navbar.styl';
-import LoginPage from '../../Modules/LoginPage/LoginPage';
+import LoginPage from '../../Modules/Authorization/LoginPage/LoginPage';
 import MainPage from '../../Modules/MainPage/MainPage';
 import Button from '../Button';
 import { IAppState } from 'Types/Types';

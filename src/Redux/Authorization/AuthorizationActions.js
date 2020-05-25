@@ -1,4 +1,4 @@
-import { SIGNIN_OR_LOGIN, SIGN_IN, LOGOUT, LOG_IN, LOGIN_SUCCESS } from './Consts';
+import { SIGNIN_OR_LOGIN, SIGN_IN, LOGOUT, LOG_IN, LOGIN_SUCCESS, AUTH_SUCCESS } from './Consts';
 
 /** Экшен на изменение значения Signin или Login. */
 export function changeButtonAuthAction() {
@@ -36,8 +36,9 @@ export function logoutAction() {
   }
 }
 
-export function authSuccessAction() {
+export function authSuccessAction(visitorData) {
   return {
-    type: AUTH_SUCCESS
+    type: AUTH_SUCCESS,
+    visitorData: visitorData
   }
 }

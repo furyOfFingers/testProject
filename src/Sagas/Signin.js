@@ -10,22 +10,22 @@ import {
 import { baseUrl } from './Sagas';
 
 function* Signin(data) {
-  yield put(showLoaderAction());
-  const response = yield call(axiosSignin, data);
   try {
+    yield put(showLoaderAction());
+    const response = yield call(axiosSignin, data);
     const path = '/mainpage';
     console.log('response Signin', response);
     // if(response.data.id) {
     //   yield put(push(path));
     //   authSuccessAction()
     // }
+    yield put(hideLoaderAction());
   } catch (err) {
     // return { err: true, result: err }
     // console.log(err, 'error')
     // yield put(errorHandle(err));
     yield put(hideLoaderAction());
   }
-  yield put(hideLoaderAction());
 }
 const errorHandle = (err) => {
   console.log('error', err)

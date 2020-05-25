@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, Switch, RouteProps } from 'react-router-dom';
-import LoginPage from '../Modules/LoginPage/LoginPage';
+import LoginPage from '../Modules/Authorization/LoginPage/LoginPage';
+import SigninPage from '../Modules/Authorization/SigninPage/SigninPage';
 import MainPage from '../Modules/MainPage/MainPage';
 import { history } from '../Store/Store';
 
@@ -16,6 +17,7 @@ function MainRouter(props: IMainRouterProps) {
         <Switch>
           {/* {props.auth ? ( */}
           <Route exact path='/' component={LoginPage} />
+          <Route exact path='/signin' component={SigninPage} />
           {/* ) : ( */}
           <Route exact path='/mainpage' component={MainPage} />
           {/* )} */}

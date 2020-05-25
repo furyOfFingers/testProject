@@ -14,6 +14,7 @@ const initialState = {
   isAuth: false,
   error: null,
   success: null,
+  isAdmin: false
 };
 
 export const authorizationReducer = (state = initialState, action) => {
@@ -21,9 +22,9 @@ export const authorizationReducer = (state = initialState, action) => {
     case SIGNIN_OR_LOGIN:
       return { ...state, isSigninOrLogin: !state.isSigninOrLogin };
     case AUTH_SUCCESS:
-      return { ...state, isAuth: true };
+      return { ...state, isAuth: true, isAdmin: action.payload };
     case LOGOUT:
-      return { ...state, isAuth: false };
+      return { ...state, isAuth: false, isAdmin: false };
     case SUCCESS_HANDLE:
       return { ...state, success: action.payload };
     case SIGN_IN:
