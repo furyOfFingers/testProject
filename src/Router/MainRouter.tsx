@@ -4,6 +4,7 @@ import { Router, Route, Switch, RouteProps } from 'react-router-dom';
 import LoginPage from '../Modules/Authorization/LoginPage/LoginPage';
 import SigninPage from '../Modules/Authorization/SigninPage/SigninPage';
 import MainPage from '../Modules/MainPage/MainPage';
+import CreateTestPage from '../Modules/CreateTestPage/CreateTestPage';
 import { history } from '../Store/Store';
 
 interface IMainRouterProps extends RouteProps {
@@ -20,6 +21,7 @@ function MainRouter(props: IMainRouterProps) {
           <Route exact path='/signin' component={SigninPage} />
           {/* ) : ( */}
           <Route exact path='/mainpage' component={MainPage} />
+          <Route exact path='/createtestpage' component={CreateTestPage} />
           {/* )} */}
         </Switch>
       </Suspense>

@@ -4,8 +4,11 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import LoginPage from '../../Modules/Authorization/LoginPage/LoginPage';
 import NavigationBar from '../Navbar/Navbar';
-import { changeButtonAuthAction, logoutAction } from '../../Redux/Authorization/AuthorizationActions';
-import {changePathAction} from "../../Redux/Router/RouterActions";
+import {
+  changeButtonAuthAction,
+  logoutAction,
+} from '../../Redux/Authorization/AuthorizationActions';
+import { changePathAction } from '../../Redux/Router/RouterActions';
 import { IAppState } from '../../Types/Types';
 import s from './Layout.styl';
 import MainRouter from '../../Router/MainRouter';
@@ -28,25 +31,35 @@ interface ILayoutProps {
   /** Признак отображения ошибки. */
   showError: boolean;
   /** Признак отображения лоадера. */
-  showLoader: boolean,
+  showLoader: boolean;
   /** Текст отображающийся в лоайдере. */
-  loaderText: string
+  loaderText: string;
   /**  */
   changePathAction?: any;
 }
 
-
 const Layout = ({ text, ...props }: ILayoutProps) => {
-
   const signinOrLoginPage = () => {
-    props.changeButtonAuthAction()
-    // props.logoutAction()
-    if (!props.isSigninOrLogin) {
-      props.changePathAction('/signin')
+    if (props.isAuth) {
+      props.logoutAction();
+      props.changePathAction('/');
     } else {
-      props.changePathAction('/')
+      props.changeButtonAuthAction();
+      if (!props.isSigninOrLogin) {
+        props.changePathAction('/signin');
+      } else {
+        props.changePathAction('/');
+      }
     }
-  }
+  };
+
+  const buttonText = () => {
+    if (props.isAuth) {
+      return 'Logout';
+    } else {
+      return !props.isSigninOrLogin ? 'Signin' : 'Login';
+    }
+  };
 
   return (
     <div className={s['layout-container']}>
@@ -54,26 +67,21 @@ const Layout = ({ text, ...props }: ILayoutProps) => {
         <span>{text}</span>
 
         <div>
-          <Button
-            text={!props.isSigninOrLogin ? 'Signin' : 'Login'}
-            onClick={signinOrLoginPage}
-          />
+          <Button text={buttonText()} onClick={signinOrLoginPage} />
         </div>
       </div>
 
-      {props.errorText &&
+      {props.errorText && (
         <div className={s['layout-header-error']}>
           <span>{props.errorText}</span>
         </div>
-      }
+      )}
 
-      {props.showLoader &&
+      {props.showLoader && (
         <div className={s['layout-loader']}>
-          <span>
-            {props.loaderText}
-          </span>
+          <span>{props.loaderText}</span>
         </div>
-      }
+      )}
 
       <div className={s['layout-body']}>
         <MainRouter></MainRouter>
@@ -85,7 +93,7 @@ const Layout = ({ text, ...props }: ILayoutProps) => {
 const mapDispatchToProps = {
   changeButtonAuthAction,
   changePathAction,
-  logoutAction
+  logoutAction,
 };
 
 const mapStateToProps = (state: IAppState) => ({

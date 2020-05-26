@@ -3,23 +3,13 @@ import Button from '../../../Components/Button/Button';
 import Input from '../../../Components/Input/Input';
 import { connect } from 'react-redux';
 import { IAppState } from '../../../Types/Types';
-import {
-  signinAction,
-  loginAction,
-} from '../../../Redux/Authorization/AuthorizationActions';
-import { changePathAction } from '../../../Redux/Router/RouterActions';
+import { signinAction } from '../../../Redux/Authorization/AuthorizationActions';
 import s from './SigninPage.styl';
 import Checkbox from '../../../Components/Checkbox/Checkbox';
 
 interface ISigninPageProps {
-  /** Признак отображения значения Signin или Login */
-  isSigninOrLogin: boolean;
-  /** Метод изменяющий path. */
-  changePathAction: (path: string) => void;
   /** Метод регистрации. */
   signinAction: (formState: any) => void;
-  /** Метод регистрации. */
-  loginAction: (formState: any) => void;
 }
 
 const SigninPage = ({ ...props }: ISigninPageProps) => {
@@ -113,7 +103,7 @@ const SigninPage = ({ ...props }: ISigninPageProps) => {
       ...formState,
       [event.currentTarget.name]: event.currentTarget.value,
     });
-    onBlurFormValidation()
+    onBlurFormValidation();
   };
 
   /** Изменяет значение checkbox. */
@@ -130,8 +120,8 @@ const SigninPage = ({ ...props }: ISigninPageProps) => {
     !isFieldsValidate.login &&
     !isFieldsValidate.password &&
     !isFieldsValidate.confirmPassword
-    ? false
-    : true
+      ? false
+      : true;
 
   return (
     <div className={s['signin-page-container']}>
@@ -189,14 +179,9 @@ const SigninPage = ({ ...props }: ISigninPageProps) => {
 };
 
 const mapDispatchToProps = {
-  changePathAction,
   signinAction,
-  loginAction,
 };
 
-const mapStateToProps = (state: IAppState) => ({
-  isSigninOrLogin: state.authorization.isSigninOrLogin,
-  // isLoginForm: state.authorization.isLoginForm
-});
+const mapStateToProps = (state: IAppState) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SigninPage);

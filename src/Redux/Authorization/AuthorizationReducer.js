@@ -22,7 +22,7 @@ export const authorizationReducer = (state = initialState, action) => {
     case SIGNIN_OR_LOGIN:
       return { ...state, isSigninOrLogin: !state.isSigninOrLogin };
     case AUTH_SUCCESS:
-      return { ...state, isAuth: true, isAdmin: action.payload };
+      return { ...state, isAuth: true, isAdmin: action.isUserAdmin };
     case LOGOUT:
       return { ...state, isAuth: false, isAdmin: false };
     case SUCCESS_HANDLE:

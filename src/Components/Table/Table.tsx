@@ -17,7 +17,6 @@ interface ITableProps {
  * Компонент Table
  */
 const Table: React.FC<ITableProps> = ({ header, data }) => {
-
   //todo разобраться с классами и сортировкой элементов.
 
   /** Рендерит заголовок таблицы. */
@@ -34,7 +33,9 @@ const Table: React.FC<ITableProps> = ({ header, data }) => {
         <tr className={s['data-body-table']} key={key}>
           <td>{el.id}</td>
           <td>{el.name}</td>
+          <td>{el.type}</td>
           <td>{el.timeOfCreation}</td>
+          {el.action && <td>{el.action}</td>}
         </tr>
       );
     });
@@ -44,7 +45,7 @@ const Table: React.FC<ITableProps> = ({ header, data }) => {
     <div className={s['table-container']}>
       <table>
         <tbody>
-          <tr>{renderTableHeader()}</tr>
+          <tr className={s['table-container-header']}>{renderTableHeader()}</tr>
           {renderTableBode()}
         </tbody>
       </table>

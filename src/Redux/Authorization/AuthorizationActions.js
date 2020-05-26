@@ -36,9 +36,9 @@ export function logoutAction() {
   }
 }
 
-export function authSuccessAction(visitorData) {
+export function authSuccessAction(isUserAdmin) {
   return {
     type: AUTH_SUCCESS,
-    visitorData: visitorData
+    isUserAdmin: isUserAdmin
   }
 }
