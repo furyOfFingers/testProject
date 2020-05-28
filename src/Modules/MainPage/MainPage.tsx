@@ -4,22 +4,20 @@ import Table from '../../Components/Table/Table';
 import Button from '../../Components/Button/Button';
 import s from './MainPage.styl';
 import { IAppState } from '../../Types/Types';
+import axios from 'axios';
 
 const MainPage = ({ ...props }) => {
-  const tableHeader = props.isAuth
-    ? ['#', 'Task name', 'Type', 'Time of creation']
-    : ['#', 'Task name', 'Type', 'Time of creation', 'Action'];
-  const tableData = props.isAuth ?
-  [ { id: 1, name: 'story', type: 'single', timeOfCreation: '20.03.2020' },
+  const tableHeader = ['#', 'Task name', 'Type', 'Time of creation'];
+  const tableData = [
+    { id: 1, name: 'story', type: 'single', timeOfCreation: '20.03.2020' },
     { id: 2, name: 'auto', type: 'multiple', timeOfCreation: '03.03.2020' },
-    { id: 3, name: 'dance', type: 'number', timeOfCreation: '10.04.2020' }] :
-  [ { id: 1, name: 'story', type: 'single', timeOfCreation: '20.03.2020', action: 'delete' },
-    { id: 2, name: 'auto', type: 'multiple', timeOfCreation: '03.03.2020', action: 'delete' },
-    { id: 3, name: 'dance', type: 'number', timeOfCreation: '10.04.2020', action: 'delete' }];
+    { id: 3, name: 'dance', type: 'number', timeOfCreation: '10.04.2020' },
+  ];
 
-    const addTest = () => {
-      
-    }
+  const addTest = () => {
+    console.log(props.isAdmin);
+
+  };
 
   return (
     <div className={s['main-page-container']}>
@@ -27,9 +25,11 @@ const MainPage = ({ ...props }) => {
         <Table data={tableData} header={tableHeader} />
       </div>
 
-      <div className={s['add-test-button']}>
-        <Button onClick={addTest} text='Add Test' />
-      </div>
+      {/* {props.isAdmin && ( */}
+        <div className={s['add-test-button']}>
+          <Button onClick={addTest} text='Add Test' />
+        </div>
+      {/* // )} */}
     </div>
   );
 };
@@ -37,7 +37,7 @@ const MainPage = ({ ...props }) => {
 const mapDispatchToProps = {};
 
 const mapStateToProps = (state: IAppState) => ({
-  isAuth: state.authorization.isAuth,
+  isAdmin: state.authorization.isAdmin,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

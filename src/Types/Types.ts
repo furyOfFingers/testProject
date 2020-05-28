@@ -41,12 +41,14 @@ export type IFieldActionTypes = IFirstNameProps | ISecondNameProps | InitialStat
  * @prop {string} errorText Текст ошибки компонента layout.
  * @prop {boolean} showError Признак отображения ошибки компонента layout.
  * @prop {boolean} checked Флаг чекбокса.
+ * @prop {boolean} isAdmin Признак наличия прав администратора.
  */
 export interface IAppState {
   authorization: {
     isSigninOrLogin: boolean
     isLoginForm: boolean;
     isAuth: boolean;
+    isAdmin: boolean;
   };
   loader: {
     showLoader: boolean,

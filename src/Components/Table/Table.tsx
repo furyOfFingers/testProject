@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import s from './Table.styl';
+import { IAppState } from '../../Types/Types';
+import { connect } from 'react-redux';
+import ActionPanel from './ActionPanel';
 
 /**
  * Свойства компонента Table.
@@ -11,16 +14,19 @@ interface ITableProps {
   onClick?: () => void;
   /** Заголовок компонента Table. */
   header: any;
+  /** Признак наличия прав администратора. */
+  isAdmin: boolean;
 }
 
 /**
  * Компонент Table
  */
-const Table: React.FC<ITableProps> = ({ header, data }) => {
+const Table: React.FC<ITableProps> = ({ header, data, ...props }) => {
   //todo разобраться с классами и сортировкой элементов.
 
   /** Рендерит заголовок таблицы. */
   const renderTableHeader = (): any => {
+    props.isAdmin && header.push('Action');
     return header.map((el: any, key: number) => {
       return <th key={key}>{el}</th>;
     });
@@ -35,7 +41,6 @@ const Table: React.FC<ITableProps> = ({ header, data }) => {
           <td>{el.name}</td>
           <td>{el.type}</td>
           <td>{el.timeOfCreation}</td>
-          {el.action && <td>{el.action}</td>}
         </tr>
       );
     });
@@ -53,4 +58,11 @@ const Table: React.FC<ITableProps> = ({ header, data }) => {
   );
 };
 
-export default Table;
+// export default Table;
+const mapDispatchToProps = {};
+
+const mapStateToProps = (state: IAppState) => ({
+  isAdmin: state.authorization.isAdmin,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -1,0 +1,43 @@
+@import '../../Assets/variables.styl';
+
+.radio-button-container
+  position relative
+  cursor pointer
+  font-size 22px
+  -webkit-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
+
+.radio-button-container input
+  position absolute
+  opacity 0
+  cursor pointer
+
+.checkmark 
+  position absolute
+  top 0
+  left 0
+  height 17px
+  width 17px
+  border 1px solid $color-primary-bg
+  border-radius 50%
+
+.radio-button-container input:checked ~ .checkmark
+  background-color $color-green
+
+.checkmark:after
+  content ''
+  position absolute
+  display none
+
+.radio-button-container input:checked ~ .checkmark:after
+  display: block
+
+.radio-button-container .checkmark:after
+  top 5px
+  left 5px
+  width 7px
+  height 7px
+  border-radius: 50%
+  background $color-white

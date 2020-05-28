@@ -1,5 +1,6 @@
 import { takeEvery, put, call, all } from 'redux-saga/effects';
 import axios from 'axios';
+axios.defaults.withCredentials = true
 import { LOG_IN } from '../Redux/Authorization/Consts';
 import { push } from 'connected-react-router';
 import { baseUrl } from './Sagas';
@@ -9,30 +10,29 @@ import {
 } from '../Redux/Loader/LoaderActions';
 import { showLayoutErrorAction } from '../Redux/Layout/LayoutActions';
 import { authSuccessAction } from '../Redux/Authorization/AuthorizationActions';
+import API from './API'
 
 function* Login(data) {
   try {
     yield put(showLoaderAction());
-    const response = yield call(axiosLogin, data);
-    const path = '/mainpage';
-    console.log('response Login', response);
-    if(response.data.id) {
+    const {response, error} = yield call(axiosLogin, data);
+    console.log()
+    if(response) {
+      // const {responseTest, errorTest} = yield call(axiosGetTest, response.data.id)
+      const path = '/mainpage';
       yield put(push(path));
-    }
-    if(response.data.is_admin) {
       yield put(authSuccessAction(response.data.is_admin));
     }
-    if(response.error) {
-      console.log('errorrrr!!?')
       /** TODO разобратсья с обработкой ошибок */
-      // yield put(showLayoutErrorAction(response.error));
-    }
+      // yield put(showLayoutErrorAction(response.error))
     yield put(hideLoaderAction());
   } catch (err) {
+    console.log('error in catch!')
     yield put(hideLoaderAction());
   }
 }
 
+/** Запрос на авториацию */
 const axiosLogin = (data) => {
   return axios({
     method: 'post',
@@ -41,12 +41,24 @@ const axiosLogin = (data) => {
       'Content-Type': 'application/json',
     },
     data: {
-      username: 'passwords',
-      password: 'passwords',
-      // username: data.authData.login,
-      // password: data.authData.password,
+      // username: 'passwords',
+      // password: 'passwords',
+      username: data.authData.login,
+      password: data.authData.password,
     },
-  });
+  })
+  .then(response => ({response}))
+    .catch(error => ({error}));
+};
+
+/** Запрос на получение тестов */
+const axiosGetTest = (data) => {
+  return axios({
+    method: 'get',
+    url: `${baseUrl}${data}`
+  })
+  .then(response => ({response}))
+    .catch(error => ({error}));
 };
 
 // function* Login(data) {
