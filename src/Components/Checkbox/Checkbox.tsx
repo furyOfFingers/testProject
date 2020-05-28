@@ -1,8 +1,5 @@
 import React from 'react';
 import s from './Checkbox.styl';
-// import { connect } from 'react-redux';
-// import { checkboxAction } from './Actions';
-// import {IAppState} from "Types/Types";
 
 /**
  * Свойства компонента Checkbox.
@@ -36,11 +33,4 @@ const Checkbox = ({ checked, text, onChange, name }: ICheckboxProps) => {
   );
 };
 
-// const mapDispatchToProps = {checkboxAction};
-
-// const mapStateToProps = (state: IAppState) => ({
-//   checked: state.checkbox.checked
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Checkbox);
 export default Checkbox;

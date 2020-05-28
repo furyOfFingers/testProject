@@ -6,13 +6,19 @@ import s from './CreateQuestion.styl';
 import { IAppState } from '../../Types/Types';
 import axios from 'axios';
 import RadioButton from "../../Components/RadioButton/RadioButton";
+import Select from "../../Components/Select/Select";
 
 const CreateQuestion = ({ ...props }) => {
 
+  const handleOnClickSelect = () => {
+    console.log(1)
+  }
+
   return (
     <div className={s['create-question-container']}>
-      CreateQuestion
-      <RadioButton/>
+      <span>CreateQuestion</span>
+      {/* <RadioButton/> */}
+      <Select />
     </div>
   );
 };

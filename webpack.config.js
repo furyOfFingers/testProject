@@ -7,7 +7,6 @@ const htmlPlugin = new HtmlWebPackPlugin({
 });
 
 module.exports = {
-  // entry: ['react-hot-loader/patch', './src/index'],
   entry: './src/index',
   output: {
     path: path.join(__dirname, '/dist'),

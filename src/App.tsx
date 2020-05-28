@@ -7,7 +7,6 @@ import Layout from './Components/Layout/Layout';
 import Input from './Components/Input/Input';
 import MainPage from './Modules/MainPage/MainPage';
 import WorkCode from './Components/WorkCode/WorkCode';
-import { hot } from 'react-hot-loader/root';
 
 const App = ({}) => {
   return (
@@ -25,4 +24,4 @@ const App = ({}) => {
   );
 };
 
-export default hot(App);
+export default App;

@@ -4,7 +4,7 @@ import { Router, Route, Switch, RouteProps } from 'react-router-dom';
 import LoginPage from '../Modules/Authorization/LoginPage/LoginPage';
 import SigninPage from '../Modules/Authorization/SigninPage/SigninPage';
 import MainPage from '../Modules/MainPage/MainPage';
-import CreateTestPage from '../Modules/CreateTestPage/CreateTestPage';
+import CreateTestPage from '../Modules/CreatePage/CreatePage';
 import { history } from '../Store/Store';
 
 interface IMainRouterProps extends RouteProps {

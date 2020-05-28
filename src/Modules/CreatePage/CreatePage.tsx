@@ -3,7 +3,7 @@ import Table from '../../Components/Table/Table';
 import { IAppState } from '../../Types/Types';
 import { connect } from 'react-redux';
 import Button from '../../Components/Button/Button';
-import s from './CreateTestPage.styl';
+import s from './CreatePage.styl';
 import {
   createTestAction,
   getTestAction,
@@ -61,7 +61,7 @@ const CreateTestPage = ({ ...props }) => {
   };
 
   return (
-    <div className={s['create-test-page-container']}>
+    <div className={s['create-page-container']}>
       <div className={s['test-container']}>
         <span></span>
         <Table data={tableData} header={tableHeader} />
