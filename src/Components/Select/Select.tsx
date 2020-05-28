@@ -6,33 +6,26 @@ import c from 'classnames';
  * Свойства компонента Select.
  */
 interface ISelectProps {
-  /** onClick компонетна Select. */
-  handleOnClick?: () => void;
-  /**  */
+  /** onChange компонетна Select. */
+  onChange?: ((option: string) => void) | any;
 }
 
 /**
  * Компонент Select.
  */
-const Select = ({}: ISelectProps) => {
+const Select = ({ onChange, }: ISelectProps) => {
   const [isOpenList, setOpenList] = useState(false);
   const [selection, setSelection] = useState('single');
-
-  const handleOnClick = (item: string) => {
-    setSelection(item);
-  };
   const items = ['single', 'multiple', 'number'];
 
-  // /**
-  //  * Метод изменяющий значение инпутов формы.
-  //  * @param {Event} event Объект инициатора события.
-  //  */
-  // const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormState({
-  //     ...formState,
-  //     [event.currentTarget.name]: event.currentTarget.value,
-  //   });
-  // };
+  /**
+   * Метод изменяющий option компонента select.
+   * @param {string} item option.
+   */
+  const handleOnClick = (item: string) => {
+    setSelection(item);
+    onChange(item);
+  };
 
   return (
     <div className={s['custom-select-container']}>
@@ -40,7 +33,7 @@ const Select = ({}: ISelectProps) => {
 
       <div className={s['select']} onClick={() => setOpenList(!isOpenList)}>
         {selection}
-      <span className={c({ [s['triangle']]: isOpenList })}></span>
+        <span className={c({ [s['triangle']]: isOpenList })}></span>
 
         {isOpenList && (
           <div>
@@ -54,13 +47,6 @@ const Select = ({}: ISelectProps) => {
       </div>
     </div>
   );
-  // <div className={s['custom-select']}>
-  //   <select>
-  //     <option value="0">single</option>
-  //     <option value="1">multiple</option>
-  //     <option value="2">number</option>
-  //   </select>
-  // </div>
 };
 
 export default Select;

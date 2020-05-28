@@ -5,7 +5,6 @@ import { loaderReducer } from './Loader/LoaderReducer';
 import { layoutErrorReducer } from './Layout/LayoutReducer';
 import { authorizationReducer } from './Authorization/AuthorizationReducer';
 import { routerReducer } from './Router/RouterReducer';
-import checkboxReducer from '../Components/Checkbox/Reducer';
 import errorHandlerRootReducer from "./ErrorHandler/errorHandlerRootReducer";
 
 const rootReducer = combineReducers({
@@ -14,8 +13,6 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   layout: layoutErrorReducer,
   error: errorHandlerRootReducer,
-  /**не забудь удалить */
-  checkbox: checkboxReducer
 });
 
 export default rootReducer;
