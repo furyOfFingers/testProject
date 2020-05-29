@@ -10,24 +10,27 @@
   padding 0 2px
 
 .select
+  margin-top 5px;
   position relative
-  background-color $color-white-gray-gray
-  padding 5px 8px
+  border 1px solid $color-primary-bg
+  border-radius 5px
+  // background-color $color-white-gray-gray
+  padding 5px 10px
   cursor pointer
-  font normal 16px/20px Georgia, sans-serif
+  font normal 18px/20px Georgia, sans-serif
   color $color-text-default
 
 .select > span
   position absolute
   padding 0 10px
   right 0px
-  border-left 1px solid $color-primary-bg
+  // border-left 1px solid $color-primary-bg
   &:after
     content ''
     top 2px
     border-style solid;
     border-width 9px 5px 5px 5px
-    border-color $color-text-default transparent transparent transparent
+    border-color $color-primary-bg transparent transparent transparent
     display inline-block
     vertical-align middle
     position relative
@@ -36,7 +39,7 @@
       top -3px
       border-style solid;
       border-width 5px 5px 9px 5px
-      border-color transparent transparent #2b2b2b transparent
+      border-color transparent transparent $color-primary-bg transparent
       display inline-block
       vertical-align middle
       position relative
@@ -47,3 +50,5 @@
   padding 2px 5px
   &:hover
     background-color $color-primary-bg
+  &:last-child
+    border-bottom none

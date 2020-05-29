@@ -62,7 +62,7 @@ const LoginPage = ({ ...props }: ILoginPageProps) => {
 
   return (
     <div className={s['login-page-container']}>
-      <div className={s['inputs-container']}>
+      <div>
         <Input
           onChange={handleValueChange}
           onBlur={onBlurFieldsCheck}

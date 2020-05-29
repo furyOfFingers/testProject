@@ -125,7 +125,7 @@ const SigninPage = ({ ...props }: ISigninPageProps) => {
 
   return (
     <div className={s['signin-page-container']}>
-      <div className={s['inputs-container']}>
+      <div>
         <Input
           onChange={handleValueChange}
           onBlur={onBlurLoginValueValidate}

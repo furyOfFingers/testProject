@@ -32,18 +32,18 @@ const CreateTestPage = ({ ...props }) => {
     //   title: 'newTaskTitle',
     // };
 
-    // const createQuestion = {
-    //   title: 'question',
-    //   questionType: 'single',
-    //   answer: 3,
-    //   testId: 126
-    // }
+    const createQuestion = {
+      title: 'question',
+      questionType: 'multiple',
+      answer: 3,
+      testId: 126
+    }
     
     // props.createTestAction('newTest');
     // props.editTestAction(editData);
     // props.deleteTestAction('127');
     // CreateTest('newTest')
-    // props.createQuestionAction(createQuestion);
+    props.createQuestionAction(createQuestion);
 
     const editQuestion = {
       title: 'questionedit',
@@ -51,11 +51,11 @@ const CreateTestPage = ({ ...props }) => {
       answer: '2',
       questionId: '303'
     }
-    props.editQuestionAction(editQuestion);
+    // props.editQuestionAction(editQuestion);
   };
 
   const createQuestion = () => {
-    props.deleteQuestionAction('303')
+    props.deleteQuestionAction('306')
     console.log('ss');
     // props.getTestAction('127');
   };

@@ -7,6 +7,7 @@ import Select from "../../Components/Select/Select";
 import {createQuestionAction} from '../../Redux/Questions/QuestionActions';
 import Button from '../../Components/Button/Button';
 import Input from '../../Components/Input/Input'
+import QuestionAdder from './QuestionAdder/QuestionAdder';
 
 const CreateQuestion = ({ ...props }) => {
   const [questionForm, setQuestionForm] = useState({
@@ -33,7 +34,7 @@ const CreateQuestion = ({ ...props }) => {
 
   return (
     <div className={s['create-question-container']}>
-      <span>CreateQuestion</span>
+      <span>Create Question</span>
       {/* <RadioButton/> */}
       <Select onChange={handleChange}/>
 
@@ -45,6 +46,8 @@ const CreateQuestion = ({ ...props }) => {
           name='title'
           placeholder='Enter task title'
         />
+
+        <QuestionAdder/>
 
       {/* </div> */}
 
