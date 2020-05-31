@@ -7,11 +7,9 @@ import Input from '../../../Components/Input/Input';
 import Select from '../../../Components/Select/Select';
 
 interface IQuestionProps {
-  /**  */
-  id: number;
-  /**  */
+  /** Признак правильного варианта ответа на вопрос. */
   answer: boolean;
-  /**  */
+  /** Вариант ответа на вопрос. */
   versionAnswer: string;
 }
 
@@ -19,75 +17,71 @@ interface IQuestionAdderProps {
   /** onChange компонетна QuestionAdder. */
   onChange?: ((option: string) => void) | any;
 }
-
+/**
+ * Компонент QuestionAdder.
+ */
 const QuestionAdder = ({ onChange, ...props }: IQuestionAdderProps) => {
+  const newQuestion: IQuestionProps = {
+    answer: false,
+    versionAnswer: '',
+  };
   const [questions, setQuestion] = useState([
-    {
-      id: 0,
-      answer: false,
-      versionAnswer: '',
-    } as IQuestionProps,
+    { ...newQuestion } as IQuestionProps,
   ]);
 
+  /** Изменяет значение поля Input. */
   const handleChangeAnswer = (
     event: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    setQuestion(
-      questions.map((item) =>
-        item.id === i
-          ? { ...item, versionAnswer: event.currentTarget.value }
-          : item
-      )
-    );
-    // let newQuestionsArr = [...questions];
-    // newQuestionsArr[i].versionAnswer = event.target.value;
-    // setQuestion(newQuestionsArr)
+    const updatedQuestions = [...questions];
+    updatedQuestions[i].versionAnswer = event.target.value;
+    setQuestion(updatedQuestions);
   };
 
-  const handleChangeRadioButton = (i: number) => {
-    console.log(typeof i);
+  /** Изменяет значение поля RadioButton. */
+  const handleChangeRadioButton = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    questions.map((el) => el.answer = false);
+    const updatedQuestions = [...questions];
+    updatedQuestions[i].answer = event.currentTarget.checked;
+    setQuestion(updatedQuestions)
   };
 
-  /** Добавляет поле варианта ответа. */
+  /** Добавляет варианта ответа. */
   const handleAddQuestion = () => {
-    const newQuestion: IQuestionProps = {
-      id: ++questions[0].id,
-      answer: false,
-      versionAnswer: '',
-    };
-    setQuestion((questions) => [...questions, newQuestion]);
+    setQuestion([...questions, { ...newQuestion }]);
   };
 
-const handleDeleteQuestion = (i: number) => {
-  console.log(i)
-  // if (questions.length  === 1) return false
-  // const tempQuestions = [...questions];
-  // tempQuestions.splice(i, 1)
-  // setQuestion(tempQuestions)
-
-  // setQuestion(questions.splice(i, 1))
-  // setQuestion(questions.filter(item => item.id !== i))
-}
+  /** Удаляет вариант ответа. */
+  const handleDeleteQuestion = (i: number) => {
+    if (questions.length === 1) return false;
+    const tempQuestions = [...questions];
+    tempQuestions.splice(i, 1);
+    setQuestion(tempQuestions);
+  };
 
   /** render блока ответов. */
   const questionAdderFormRender = () => {
-    return questions.map((el, i: number) => {
+    return questions.map((el, i: any) => {
       return (
         <div key={i} className={s['question-field']}>
           <RadioButton
-            onChange={() => handleChangeRadioButton(i)}
+            id='radioButton'
+            onChange={(event) => handleChangeRadioButton(event, i)}
             extraClass={[s['extra-radio-button']]}
-            checked={el.answer}
+            checked={questions[i].answer}
           />
-          <span>{el.id}</span>
+          <span>{i}</span>
           <Input
+            name='versionAnswer'
             onChange={(event) => handleChangeAnswer(event, i)}
-            value={el.versionAnswer}
+            value={questions[i].versionAnswer}
             extraClass={[s['extra-input']]}
-            name='question'
           />
-{/* 
+          {/* 
           <Button
             onClick={() => handleAddQuestion(i)}
             theme='green'

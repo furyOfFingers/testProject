@@ -6,20 +6,27 @@ import c from 'classnames';
  * Свойства компонента RadioButton.
  */
 export interface IRadioButtonProps {
-  /** Флаг radio button. */
+  /** Флаг radio RadioButton. */
   checked?: boolean;
-  /** onchange компонента input. */
+  /** onchange компонента RadioButton. */
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   /** Дополнительный стиль RadioButton. */
   extraClass?: (string | object)[];
+  /** id компонента RadioButton */
+  id?: string;
 }
 
 /**
  * Компонент RadioButton.
  */
-const RadioButton = ({ extraClass = [], checked, onChange }: IRadioButtonProps) => {
+const RadioButton = ({
+  id,
+  checked,
+  onChange,
+  extraClass = [],
+}: IRadioButtonProps) => {
   return (
-    <label className={c(s['radio-button-container'], ...extraClass)}>
+    <label id={id} className={c(s['radio-button-container'], ...extraClass)}>
       <input type='radio' name='radio' checked={checked} onChange={onChange} />
       <span className={s['checkmark']}></span>
     </label>
