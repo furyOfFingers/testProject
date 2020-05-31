@@ -1,4 +1,12 @@
-import { SIGNIN_OR_LOGIN, SIGN_IN, LOGOUT, LOG_IN, LOGIN_SUCCESS, AUTH_SUCCESS } from './Consts';
+import {
+  GET_CURRENT_USER,
+  SIGNIN_OR_LOGIN,
+  LOGIN_SUCCESS,
+  AUTH_SUCCESS,
+  SIGN_IN,
+  LOG_IN,
+  LOGOUT,
+} from './Consts';
 
 /** Экшен на изменение значения Signin или Login. */
 export function changeButtonAuthAction() {
@@ -6,7 +14,6 @@ export function changeButtonAuthAction() {
     type: SIGNIN_OR_LOGIN,
   };
 }
-
 
 /** Экшен на signin.
  *
@@ -32,13 +39,19 @@ export function loginAction(formState) {
 
 export function logoutAction() {
   return {
-    type: LOGOUT
-  }
+    type: LOGOUT,
+  };
 }
 
 export function authSuccessAction(isUserAdmin) {
   return {
     type: AUTH_SUCCESS,
-    isUserAdmin: isUserAdmin
-  }
+    isUserAdmin: isUserAdmin,
+  };
+}
+
+export function getCurrentUserAction() {
+  return {
+    type: GET_CURRENT_USER
+  };
 }

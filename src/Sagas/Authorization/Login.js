@@ -1,16 +1,16 @@
-import { takeEvery, put, call, all } from 'redux-saga/effects';
+import { takeEvery, put, call } from 'redux-saga/effects';
 import axios from 'axios';
 axios.defaults.withCredentials = true
-import { LOG_IN } from '../Redux/Authorization/Consts';
+import { LOG_IN } from '../../Redux/Authorization/Consts';
 import { push } from 'connected-react-router';
-import { baseUrl } from './Sagas';
+import { baseUrl } from '../Sagas';
 import {
   showLoaderAction,
   hideLoaderAction,
-} from '../Redux/Loader/LoaderActions';
-import { showLayoutErrorAction } from '../Redux/Layout/LayoutActions';
-import { authSuccessAction } from '../Redux/Authorization/AuthorizationActions';
-import API from './API'
+} from '../../Redux/Loader/LoaderActions';
+import { showLayoutErrorAction } from '../../Redux/Layout/LayoutActions';
+import { authSuccessAction } from '../../Redux/Authorization/AuthorizationActions';
+import API from '../API'
 
 function* Login(data) {
   try {
@@ -46,16 +46,6 @@ const axiosLogin = (data) => {
       username: data.authData.login,
       password: data.authData.password,
     },
-  })
-  .then(response => ({response}))
-    .catch(error => ({error}));
-};
-
-/** Запрос на получение тестов */
-const axiosGetTest = (data) => {
-  return axios({
-    method: 'get',
-    url: `${baseUrl}${data}`
   })
   .then(response => ({response}))
     .catch(error => ({error}));

@@ -1,6 +1,5 @@
 export const SIGNIN_OR_LOGIN = 'SIGNIN_OR_LOGIN';
 export const HIDE_LOGIN_FORM = 'HIDE_LOGIN_FORM';
-export const SHOW_LOGIN_FORM = 'SHOW_LOGIN_FORM';
 export const CHANGE_PATH = 'CHANGE_PATH';
 
 export const LOG_IN = 'AUTH/LOG_IN';

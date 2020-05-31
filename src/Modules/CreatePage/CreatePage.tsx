@@ -11,6 +11,7 @@ import {
   deleteTestAction
 } from '../../Redux/Tests/TestsActions';
 import { createQuestionAction, editQuestionAction, deleteQuestionAction } from '../../Redux/Questions/QuestionActions';
+import { getCurrentUserAction } from '../../Redux/Authorization/AuthorizationActions';
 // import {CreateTest} from '../../Sagas/Tests/CreateTest';
 import CreateQuestion from "../CreateQuestion/CreateQuestion";
 import CreateTest from "../CreateTest/CreateTest";
@@ -35,7 +36,7 @@ const CreateTestPage = ({ ...props }) => {
     const createQuestion = {
       title: 'question',
       questionType: 'multiple',
-      answer: 3,
+      answer: 1,
       testId: 126
     }
     
@@ -55,8 +56,9 @@ const CreateTestPage = ({ ...props }) => {
   };
 
   const createQuestion = () => {
-    props.deleteQuestionAction('306')
-    console.log('ss');
+    // props.deleteQuestionAction('306')
+    props.getCurrentUserAction()
+    console.log('createQuestion');
     // props.getTestAction('127');
   };
 
@@ -91,7 +93,8 @@ const mapDispatchToProps = {
   deleteTestAction,
   createQuestionAction,
   editQuestionAction,
-  deleteQuestionAction
+  deleteQuestionAction,
+  getCurrentUserAction
 };
 
 const mapStateToProps = (state: IAppState) => ({

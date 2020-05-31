@@ -12,10 +12,10 @@ interface IButtonProps {
   onClick: () => void;
   /** свойство disabled кнопки. */
   disabled?: boolean;
-  /** Параметр принимающий стиль кнопки. */
-  extra?: any;
   /** Тема Button */
   theme?: 'info' | 'green' | 'red' | 'default';
+  /** Тип кнопки. */
+  type?: 'icon' | 'text'
 }
 
 /**
@@ -25,13 +25,13 @@ const Button = ({
   text,
   onClick,
   disabled,
-  extra,
   theme = 'default',
+  type = 'text'
 }: IButtonProps) => {
   const style = c(
     s['button-style'],
     s[`theme__${theme}`],
-    s[`extra_${extra}`],
+    s[`type__${type}`],
     { [s['disabled']]: disabled }
   );
 

@@ -27,6 +27,8 @@ export interface IInputProps {
   type?: string;
   /** onBlur компонента input. */
   onBlur?: () => void;
+  /** Дополнительный стиль Input. */
+  extraClass?: (string | object)[];
 }
 
 /**
@@ -42,9 +44,10 @@ const Input = ({
   value,
   showHint,
   type = 'text',
-  onBlur
+  onBlur,
+  extraClass = []
 }: IInputProps) => {
-  const style = c(s['input-container'], { [s['error']]: error });
+  const style = c(s['input-container'], { [s['error']]: error }, ...extraClass);
 
   return (
     <div className={style}>

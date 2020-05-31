@@ -4,7 +4,6 @@ import {
   LOGOUT,
   LOGIN_SUCCESS,
   AUTH_SUCCESS,
-  SUCCESS_HANDLE,
   SIGN_IN
 } from './Consts';
 
@@ -25,8 +24,6 @@ export const authorizationReducer = (state = initialState, action) => {
       return { ...state, isAuth: true, isAdmin: action.isUserAdmin };
     case LOGOUT:
       return { ...state, isAuth: false, isAdmin: false };
-    case SUCCESS_HANDLE:
-      return { ...state, success: action.payload };
     case SIGN_IN:
       return { ...state, success: action.payload };
     default:

@@ -1,8 +1,8 @@
 import { takeEvery, put, call, all } from 'redux-saga/effects';
-import {LOGOUT} from '../Redux/Authorization/Consts';
+import {LOGOUT} from '../../Redux/Authorization/Consts';
 import { push } from 'connected-react-router';
 import axios from 'axios';
-import { baseUrl } from './Sagas';
+import { baseUrl } from '../Sagas';
 
 function* logout() {
   try {

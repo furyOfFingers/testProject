@@ -19,8 +19,6 @@ const CreateQuestion = ({ ...props }) => {
 
   const handleChange = (option: string) => {
     setQuestionForm({...questionForm, questionType: option})
-    console.log(questionForm, 'questionForm')
-    console.log(props.option, 'props.option')
   }
 
   const createQuestion = () => {
@@ -35,7 +33,6 @@ const CreateQuestion = ({ ...props }) => {
   return (
     <div className={s['create-question-container']}>
       <span>Create Question</span>
-      {/* <RadioButton/> */}
       <Select onChange={handleChange}/>
 
       {/* <div className={s['create-question-container']}> */}

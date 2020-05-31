@@ -1,7 +1,7 @@
 import { takeEvery, put, call, all } from 'redux-saga/effects';
 import axios from 'axios';
 import { push } from 'connected-react-router';
-import { watchLogout } from './Logout';
+import { watchLogout } from './Authorization/Logout';
 import { baseUrl } from './Sagas';
 import { loginErrorHandlerAction } from '../Redux/ErrorHandler/Authorization/Actions';
 import {
