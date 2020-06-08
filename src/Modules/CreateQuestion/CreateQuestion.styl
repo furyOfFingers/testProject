@@ -2,12 +2,57 @@
 
 .create-question-container
   width 400px
-  border-top 1px solid $color-primary-bg
   border-bottom 1px solid $color-primary-bg
 
-.create-question-container > span
-  display block
+// .create-question-container > span
+//   display block
+//   text-align center
+//   font normal 16px/18px Georgia, sans-serif
+//   padding 10px 0
+//   color $color-text-default
+
+.question-title-block
+  position relative
+  display flex
+  flex-direction column
+  margin 5px
+
+.question-title-block > span
+  font normal 16px/20px Georgia, sans-serif
+  color $color-textLabel-default
+  padding 0 2px
   text-align center
-  font normal 16px/18px Georgia, sans-serif
-  padding 10px 0
+  border-bottom 1px solid $color-primary-bg
+
+.title-block
+  display flex
+
+.not-editable-span
+  max-width 230px
+  display block
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
+  align-items center
+  font normal 18px/20px Georgia, sans-serif
+  margin 5px 10px
+  padding 5px 10px
+  background-color $color-of-sent-values
+  border-radius 5px
+  border 1px solid transparent
   color $color-text-default
+
+.button-block
+  position absolute
+  right 0px
+
+.select-and-add-option-block
+  display flex
+  position relative
+
+.extra-button
+  position absolute
+  right 5px
+  // background-color $color-green;
+  // color $color-white !important
+  // font-weight bold

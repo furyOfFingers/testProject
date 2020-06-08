@@ -9,13 +9,17 @@ interface IButtonProps {
   /** Текст кнопки. */
   text: string;
   /** Метод onClick кнопки. */
-  onClick: () => void;
+  onClick: (event: React.MouseEvent) => void;
   /** свойство disabled кнопки. */
   disabled?: boolean;
   /** Тема Button */
   theme?: 'info' | 'green' | 'red' | 'default';
   /** Тип кнопки. */
-  type?: 'icon' | 'text'
+  size?: 'small' | 'middle'
+  /** name компонента input. */
+  name?: string;
+  /** Дополнительный стиль Input. */
+  extraClass?: (string | object)[];
 }
 
 /**
@@ -26,17 +30,20 @@ const Button = ({
   onClick,
   disabled,
   theme = 'default',
-  type = 'text'
+  size = 'middle',
+  name,
+  extraClass = []
 }: IButtonProps) => {
   const style = c(
     s['button-style'],
     s[`theme__${theme}`],
-    s[`type__${type}`],
-    { [s['disabled']]: disabled }
+    s[`size__${size}`],
+    { [s['disabled']]: disabled },
+    ...extraClass
   );
 
   return (
-    <button onClick={onClick} disabled={disabled} className={style}>
+    <button name={name} onClick={onClick} disabled={disabled} className={style}>
       {text}
     </button>
   );

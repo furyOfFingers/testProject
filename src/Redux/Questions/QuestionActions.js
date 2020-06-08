@@ -13,6 +13,7 @@ export function createQuestionAction(data) {
     title: data.title,
     questionType: data.questionType,
     answer: data.answer,
+
     testId: data.testId
   };
 }
@@ -30,6 +31,7 @@ export function editQuestionAction(data) {
     title: data.title,
     questionType: data.questionType,
     answer: data.answer,
+    answers: data.answers,
     questionId: data.questionId
   };
 }

@@ -1,41 +1,40 @@
 import { takeEvery, put, call, all } from 'redux-saga/effects';
 import axios from 'axios';
 import { baseUrl } from '../Sagas';
-import { EDIT_QUESTION } from '../../Redux/Questions/Consts';
 import {
   showLoaderAction,
   hideLoaderAction,
 } from '../../Redux/Loader/LoaderActions';
+import { EDIT_ANSWER } from '../../Redux/Answers/Consts';
 
-function* EditQuestion(data) {
+function* EditAnswer(data) {
   try {
     yield put(showLoaderAction());
-    const { response, error } = yield call(axiosEditQuestion, data);
+    const { response, error } = yield call(axiosEditAnswer, data);
     yield put(hideLoaderAction());
   } catch (err) {
     yield put(hideLoaderAction());
   }
 }
 
-/** Запрос на редактирование вопроса. */
-const axiosEditQuestion = (data) => {
+/** Запрос на создание ответа. */
+const axiosEditAnswer = (data) => {
+  console.log(data);
   return axios({
     method: 'patch',
-    url: `${baseUrl}questions/${data.questionId}/`,
+    url: `${baseUrl}/answers/${data.questionId}`,
     headers: {
       'scope-key': 'YWxhZGRpbjpvcGVuc2VzYW1l',
     },
     data: {
-      title: data.title,
-      question_type: data.questionType,
-      answer: data.answer,
-      answers: data.answers
+      text: data.text,
+      is_right: data.isRight,
     },
   })
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 };
 
-export default function* watchEditQuestion() {
-  yield takeEvery(EDIT_QUESTION, EditQuestion);
+export default function* watchEditAnswer() {
+  yield takeEvery(EDIT_ANSWER, EditAnswer);
 }

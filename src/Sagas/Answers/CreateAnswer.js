@@ -5,37 +5,36 @@ import {
   showLoaderAction,
   hideLoaderAction,
 } from '../../Redux/Loader/LoaderActions';
-import { CREATE_QUESTION } from '../../Redux/Questions/Consts';
+import { CREATE_ANSWER } from '../../Redux/Answers/Consts';
 
-function* CreateQuestion(data) {
+function* CreateAnswer(data) {
   try {
     yield put(showLoaderAction());
-    const { response, error } = yield call(axiosCreateQuestion, data);
+    const { response, error } = yield call(axiosCreateAnswer, data);
     yield put(hideLoaderAction());
   } catch (err) {
     yield put(hideLoaderAction());
   }
 }
 
-/** Запрос на создание вопроса. */
-const axiosCreateQuestion = (data) => {
-  console.log(data)
+/** Запрос на создание ответа. */
+const axiosCreateAnswer = (data) => {
+  console.log(data);
   return axios({
     method: 'post',
-    url: `${baseUrl}tests/${data.testId}/questions`,
+    url: `${baseUrl}/questions/${data.questionId}/answers`,
     headers: {
       'scope-key': 'YWxhZGRpbjpvcGVuc2VzYW1l',
     },
     data: {
-      title: data.title,
-      question_type: data.questionType,
-      answer: data.answer
+      text: data.text,
+      is_right: data.isRight,
     },
   })
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 };
 
-export default function* watchCreateQuestion() {
-  yield takeEvery(CREATE_QUESTION, CreateQuestion);
+export default function* watchCreateAnswer() {
+  yield takeEvery(CREATE_ANSWER, CreateAnswer);
 }

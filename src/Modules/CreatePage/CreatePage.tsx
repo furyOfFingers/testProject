@@ -8,13 +8,17 @@ import {
   createTestAction,
   getTestAction,
   editTestAction,
-  deleteTestAction
+  deleteTestAction,
 } from '../../Redux/Tests/TestsActions';
-import { createQuestionAction, editQuestionAction, deleteQuestionAction } from '../../Redux/Questions/QuestionActions';
+import {
+  createQuestionAction,
+  editQuestionAction,
+  deleteQuestionAction,
+} from '../../Redux/Questions/QuestionActions';
 import { getCurrentUserAction } from '../../Redux/Authorization/AuthorizationActions';
 // import {CreateTest} from '../../Sagas/Tests/CreateTest';
-import CreateQuestion from "../CreateQuestion/CreateQuestion";
-import CreateTest from "../CreateTest/CreateTest";
+import CreateQuestion from '../CreateQuestion/CreateQuestion';
+import CreateTest from '../CreateTest/CreateTest';
 
 const CreateTestPage = ({ ...props }) => {
   const tableHeader = ['#', 'Task name', 'Type', 'Time of creation'];
@@ -24,7 +28,7 @@ const CreateTestPage = ({ ...props }) => {
     { id: 3, name: 'dance', type: 'number', timeOfCreation: '10.04.2020' },
     { id: 4, name: 'story', type: 'single', timeOfCreation: '20.03.2020' },
     { id: 5, name: 'auto', type: 'multiple', timeOfCreation: '03.03.2020' },
-    { id: 6, name: 'dance', type: 'number', timeOfCreation: '10.04.2020' }
+    { id: 6, name: 'dance', type: 'number', timeOfCreation: '10.04.2020' },
   ];
 
   const createTest = () => {
@@ -34,12 +38,13 @@ const CreateTestPage = ({ ...props }) => {
     // };
 
     const createQuestion = {
-      title: 'question',
-      questionType: 'multiple',
+      title: 'new question with answers',
+      questionType: 'single',
       answer: 1,
-      testId: 126
-    }
-    
+      answers: [],
+      testId: 126,
+    };
+
     // props.createTestAction('newTest');
     // props.editTestAction(editData);
     // props.deleteTestAction('127');
@@ -49,17 +54,18 @@ const CreateTestPage = ({ ...props }) => {
     const editQuestion = {
       title: 'questionedit',
       questionType: 'single',
-      answer: '2',
-      questionId: '303'
-    }
+      answer: '1',
+      answers: ['22', '22'],
+      questionId: '317',
+    };
     // props.editQuestionAction(editQuestion);
   };
 
   const createQuestion = () => {
-    // props.deleteQuestionAction('306')
-    props.getCurrentUserAction()
+    // props.deleteQuestionAction('309')
+    // props.getCurrentUserAction()
     console.log('createQuestion');
-    // props.getTestAction('127');
+    props.getTestAction('126');
   };
 
   return (
@@ -67,19 +73,19 @@ const CreateTestPage = ({ ...props }) => {
       <div className={s['test-container']}>
         <span></span>
         <Table data={tableData} header={tableHeader} />
-        <CreateTest/>
+        <CreateTest />
 
         <div>
-          <Button onClick={createTest} text='Create Test' />
+          <Button onClick={createTest} text='creaTE question' />
         </div>
       </div>
 
       <div className={s['question-container']}>
         <Table data={tableData} header={tableHeader} />
-        <CreateQuestion/>
+        <CreateQuestion />
 
         <div>
-          <Button onClick={createQuestion} text='Create Question' />
+          <Button onClick={createQuestion} text='get Question' />
         </div>
       </div>
     </div>
@@ -94,7 +100,7 @@ const mapDispatchToProps = {
   createQuestionAction,
   editQuestionAction,
   deleteQuestionAction,
-  getCurrentUserAction
+  getCurrentUserAction,
 };
 
 const mapStateToProps = (state: IAppState) => ({

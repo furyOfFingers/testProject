@@ -45,8 +45,9 @@ const Input = ({
   showHint,
   type = 'text',
   onBlur,
-  extraClass = []
+  extraClass = [],
 }: IInputProps) => {
+
   const style = c(s['input-container'], { [s['error']]: error }, ...extraClass);
 
   return (

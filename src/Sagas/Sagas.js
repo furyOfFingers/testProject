@@ -3,6 +3,7 @@ import authorizationRoot from './Authorization/WatcherRoot';
 import watchRouter from './Router';
 import testsRoot from './Tests/WatcherRoot';
 import questionsRoot from './Questions/WatcherRoot';
+import answersRoot from './Answers/WatcherRoot';
 
 const auth =
   'Basic ' + new Buffer('passwords' + ':' + 'passwords').toString('base64');
@@ -15,5 +16,6 @@ export default function* rootSaga() {
     watchRouter(),
     testsRoot(),
     questionsRoot(),
+    answersRoot()
   ]);
 }

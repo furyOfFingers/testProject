@@ -29,7 +29,7 @@ const Select = ({ onChange, }: ISelectProps) => {
 
   return (
     <div className={s['custom-select-container']}>
-      <span>choice question type</span>
+      {/* <span>choice question type</span> */}
 
       <div className={s['select']} onClick={() => setOpenList(!isOpenList)}>
         {selection}

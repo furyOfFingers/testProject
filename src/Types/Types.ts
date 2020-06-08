@@ -58,6 +58,18 @@ export interface IAppState {
     showError: boolean;
   }
 }
+/**
+ * Интерфейс блока вопроса.
+ *
+ * @prop {boolean} answer Признак правильного варианта ответа на вопрос.
+ * @prop {boolean} versionAnswer Вариант ответа на вопрос.
+ * @prop {boolean} isEdit Признак возможности редактирования варианта овтета.
+ */
+export interface IQuestionProps {
+  answer: boolean;
+  versionAnswer: string;
+  isEdit: boolean;
+}
 
 // /**
 //  * Модель ветки редакс-стейта модуля работы с пользователем.
