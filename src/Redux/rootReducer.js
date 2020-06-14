@@ -5,7 +5,8 @@ import { loaderReducer } from './Loader/LoaderReducer';
 import { layoutErrorReducer } from './Layout/LayoutReducer';
 import { authorizationReducer } from './Authorization/AuthorizationReducer';
 import { routerReducer } from './Router/RouterReducer';
-import errorHandlerRootReducer from "./ErrorHandler/errorHandlerRootReducer";
+import testsReducer from './Tests/TestsReducer';
+import errorHandlerRootReducer from './ErrorHandler/errorHandlerRootReducer';
 
 const rootReducer = combineReducers({
   router: routerReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   layout: layoutErrorReducer,
   error: errorHandlerRootReducer,
+  test: testsReducer,
 });
 
 export default rootReducer;

@@ -1,4 +1,11 @@
-import { CREATE_TEST, GET_TEST, EDIT_TEST, DELETE_TEST } from './Consts';
+import {
+  CREATE_TEST,
+  GET_TEST,
+  EDIT_TEST,
+  DELETE_TEST,
+  GET_ALL_TEST,
+  PULL_TESTS_IN_STORE,
+} from './Consts';
 
 /** Экшен на создание теста.
  *
@@ -43,5 +50,25 @@ export function deleteTestAction(id) {
   return {
     type: DELETE_TEST,
     id: id,
+  };
+}
+
+/** Экшен на получение списка тестов.
+ *
+ */
+export function getAllTestsAction() {
+  return {
+    type: GET_ALL_TEST,
+  };
+}
+
+/** Экшен на добавление тестов в стор.
+ *
+ * @param {string} id идентификатор теста.
+ */
+export function pullTestsInStoreAction(data) {
+  return {
+    type: PULL_TESTS_IN_STORE,
+    tests: data.tests,
   };
 }

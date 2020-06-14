@@ -6,24 +6,25 @@ import {
   showLoaderAction,
   hideLoaderAction,
 } from '../../Redux/Loader/LoaderActions';
-import { GET_TEST } from '../../Redux/Tests/Consts';
+import { pullTestsInStoreAction } from '../../Redux/Tests/TestsActions';
+import { GET_ALL_TEST } from '../../Redux/Tests/Consts';
 
-function* GetTest(data) {
+function* GetAllTests(data) {
   try {
     yield put(showLoaderAction());
-    const { response, error } = yield call(axiosGetTest, data);
-    console.log(response, 'response')
+    const { response, error } = yield call(axiosGetAllTests, data);
+    yield put(pullTestsInStoreAction(response.data))
     yield put(hideLoaderAction());
   } catch (err) {
     yield put(hideLoaderAction());
   }
 }
 
-/** Запрос на получение теста. */
-const axiosGetTest = (data) => {
+/** Запрос на получение всех тестов. */
+const axiosGetAllTests = (data) => {
   return axios({
     method: 'get',
-    url: `${baseUrl}tests/${data.id}/`,
+    url: `${baseUrl}tests`,
     headers: {
       'scope-key': 'YWxhZGRpbjpvcGVuc2VzYW1l',
     }
@@ -32,6 +33,6 @@ const axiosGetTest = (data) => {
     .catch((error) => ({ error }));
 };
 
-export default function* watchGetTest() {
-  yield takeEvery(GET_TEST, GetTest);
+export default function* watchGetAllTests() {
+  yield takeEvery(GET_ALL_TEST, GetAllTests);
 }

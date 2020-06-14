@@ -34,13 +34,13 @@ const Table: React.FC<ITableProps> = ({ header, data, ...props }) => {
 
   /** Рендерит тело таблицы. */
   const renderTableBode = () => {
-    return data.map((el: any, key: number) => {
+    return Object.keys(data).map((el: any, key: number) => {
       return (
         <tr className={s['data-body-table']} key={key}>
-          <td>{el.id}</td>
-          <td>{el.name}</td>
-          <td>{el.type}</td>
-          <td>{el.timeOfCreation}</td>
+          <td>{data[el].id}</td>
+          <td>{data[el].title}</td>
+          {data[el].type && <td>{data[el].type}</td>}
+          <td>{data[el].created_at}</td>
         </tr>
       );
     });

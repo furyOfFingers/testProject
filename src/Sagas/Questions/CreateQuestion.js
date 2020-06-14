@@ -29,7 +29,8 @@ const axiosCreateQuestion = (data) => {
     data: {
       title: data.title,
       question_type: data.questionType,
-      answer: data.answer
+      /** можно потом передать вместе с вариантами ответов */
+      // answer: data.answer
     },
   })
     .then((response) => ({ response }))

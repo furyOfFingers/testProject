@@ -14,8 +14,8 @@ import {
 export function createAnswerAction(data) {
   return {
     type: CREATE_ANSWER,
-    text: data.text,
-    isRight: data.isRight,
+    text: data.versionAnswer,
+    isRight: data.isAnswer,
     questionId: data.questionId,
   };
 }

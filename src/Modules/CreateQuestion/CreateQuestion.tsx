@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import s from './CreateQuestion.styl';
-import { IAppState, IQuestionProps } from '../../Types/Types';
+import { IAppState, IAnswerProps } from '../../Types/Types';
 import Select from '../../Components/Select/Select';
 import { createQuestionAction } from '../../Redux/Questions/QuestionActions';
 import Button from '../../Components/Button/Button';
 import Input from '../../Components/Input/Input';
-import QuestionAdder from './QuestionAdder/QuestionAdder';
+import AnswerCreator from './AnswerCreator/AnswerCreator';
 import Label from '../../Components/Label/Label';
 
 const CreateQuestion = ({ ...props }) => {
   const [questionForm, setQuestionForm] = useState({
-    title: 'qw',
+    title: '',
     questionType: 'single',
-    answer: 1,
-    answers: ['12', '22'],
-    testId: 126,
+    /**answer можно потом передать вместе с вариантами ответов */
+    answer: null,
+    testId: 134,
   });
   const [isEditTitle, setIsEditTitle] = useState(false);
 
@@ -28,7 +28,7 @@ const CreateQuestion = ({ ...props }) => {
     console.log('ss');
   };
 
-  const onChangeQuestionAdder = (questions: IQuestionProps) => {
+  const onChangeQuestionAdder = (questions: IAnswerProps) => {
     console.log(questions);
     // setQuestionForm({
     //   ...questionForm,
@@ -42,14 +42,16 @@ const CreateQuestion = ({ ...props }) => {
 
   /** Добавляет варианта ответа. */
   const handleAddQuestion = () => {
-    const newAnswer = {
-      text: 'edit answer 2',
-      isRight: false,
-      questionId: 143,
-    };
+    // const newAnswer = {
+    //   text: 'edit answer 2',
+    //   isRight: false,
+    //   questionId: 143,
+    // };
+
+    props.createQuestionAction(questionForm);
     // props.createAnswerAction(newAnswer)
     // props.editAnswerAction(newAnswer)
-    props.deleteAnswerAction(144);
+    // props.deleteAnswerAction(144);
     // setQuestion([...questions, { ...newQuestion }]);
   };
 
@@ -66,14 +68,14 @@ const CreateQuestion = ({ ...props }) => {
       <div className={s['question-title-block']}>
         <Label text='Question title' />
         <div className={s['title-block']}>
-          {isEditTitle ? (
+          {/* {isEditTitle ? ( */}
             <Input
               onChange={handleTitleChange}
               value={questionForm.title}
               name='title'
               placeholder='Enter question'
             />
-          ) : (
+          {/* ) : (
             <span className={s['not-editable-span']}>{questionForm.title}</span>
           )}
 
@@ -92,7 +94,7 @@ const CreateQuestion = ({ ...props }) => {
               text={isEditTitle ? 'cancel' : 'delete'}
               size='small'
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <Label text='Choose the type of question' />
@@ -108,7 +110,7 @@ const CreateQuestion = ({ ...props }) => {
           extraClass={[s['extra-button']]}
         />
       </div>
-      <QuestionAdder onChange={onChangeQuestionAdder} />
+      <AnswerCreator onChange={onChangeQuestionAdder} />
 
       <div>
         <Button onClick={createQuestion} text='Create Question' />

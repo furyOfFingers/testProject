@@ -1,15 +1,15 @@
 import React from 'react';
-import './ErrorLog.css';
+import s from './ErrorLog.styl';
 
 interface IErrorLogProps {
   /** Текст ошибки. */
   text?: string;
-  /** Признак отображения текста */
-  showError?: boolean;
 }
 
-const ErrorLog: React.FunctionComponent<IErrorLogProps> = ({ text, showError }): JSX.Element | any => {
-  return showError && <span className='error-log-container'>{text}</span>;
+const ErrorLog: React.FunctionComponent<IErrorLogProps> = ({
+  text,
+}): JSX.Element | any => {
+  return text && <span className={s['error-log-container']}>{text}</span>;
 };
 
 export default ErrorLog;
