@@ -1,0 +1,1 @@
+export const OPEN_EDIT_FIELD = 'OPEN_EDIT_FIELD';

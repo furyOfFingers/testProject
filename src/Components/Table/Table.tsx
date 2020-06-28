@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import s from './Table.styl';
 import { IAppState } from '../../Types/Types';
 import { connect } from 'react-redux';
-import ActionPanel from './ActionPanel';
 
 /**
  * Свойства компонента Table.
@@ -16,12 +15,14 @@ interface ITableProps {
   header: any;
   /** Признак наличия прав администратора. */
   isAdmin: boolean;
+  /** Тело компонента Table */
+  body: any;
 }
 
 /**
  * Компонент Table
  */
-const Table: React.FC<ITableProps> = ({ header, data, ...props }) => {
+const Table: React.FC<ITableProps> = ({ header, data, body, ...props }) => {
   //todo разобраться с классами и сортировкой элементов.
 
   /** Рендерит заголовок таблицы. */
@@ -32,26 +33,12 @@ const Table: React.FC<ITableProps> = ({ header, data, ...props }) => {
     });
   };
 
-  /** Рендерит тело таблицы. */
-  const renderTableBode = () => {
-    return Object.keys(data).map((el: any, key: number) => {
-      return (
-        <tr className={s['data-body-table']} key={key}>
-          <td>{data[el].id}</td>
-          <td>{data[el].title}</td>
-          {data[el].type && <td>{data[el].type}</td>}
-          <td>{data[el].created_at}</td>
-        </tr>
-      );
-    });
-  };
-
   return (
     <div className={s['table-container']}>
       <table>
         <tbody>
           <tr className={s['table-container-header']}>{renderTableHeader()}</tr>
-          {renderTableBode()}
+          {body()}
         </tbody>
       </table>
     </div>

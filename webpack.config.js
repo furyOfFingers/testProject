@@ -20,11 +20,21 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|gif|eot|ttf|woff|woff2)$/i,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 8192,
+          // name: 'static/fonts/[name].[hash:8].[ext]',
+          encoding: false
         },
+      },
+      // { test: /\.html$/, loader: 'html-loader' },
+      {
+        test: /\.svg$/,
+        loader: require.resolve('svg-inline-loader'),
+        // options: {
+        //   removeSVGTagAttrs: false
+        // }
       },
       {
         test: /\.(ts|js)x?$/,

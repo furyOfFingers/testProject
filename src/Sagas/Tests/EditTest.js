@@ -6,6 +6,7 @@ import {
   hideLoaderAction,
 } from '../../Redux/Loader/LoaderActions';
 import { EDIT_TEST } from '../../Redux/Tests/Consts';
+import { GetAllTests } from './GetAllTests';
 
 function* EditTest(data) {
   try {

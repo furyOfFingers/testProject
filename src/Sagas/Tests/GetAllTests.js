@@ -9,7 +9,7 @@ import {
 import { pullTestsInStoreAction } from '../../Redux/Tests/TestsActions';
 import { GET_ALL_TEST } from '../../Redux/Tests/Consts';
 
-function* GetAllTests(data) {
+export function* GetAllTests(data) {
   try {
     yield put(showLoaderAction());
     const { response, error } = yield call(axiosGetAllTests, data);
@@ -27,6 +27,10 @@ const axiosGetAllTests = (data) => {
     url: `${baseUrl}tests`,
     headers: {
       'scope-key': 'YWxhZGRpbjpvcGVuc2VzYW1l',
+    },
+    data: {
+      per: 2,
+      page: 2
     }
   })
     .then((response) => ({ response }))

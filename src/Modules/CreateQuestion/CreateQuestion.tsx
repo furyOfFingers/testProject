@@ -23,10 +23,10 @@ const CreateQuestion = ({ ...props }) => {
     setQuestionForm({ ...questionForm, questionType: option });
   };
 
-  const createQuestion = () => {
-    props.createQuestionAction(questionForm);
-    console.log('ss');
-  };
+  // const createQuestion = () => {
+  //   props.createQuestionAction(questionForm);
+  //   console.log('ss');
+  // };
 
   const onChangeQuestionAdder = (questions: IAnswerProps) => {
     console.log(questions);
@@ -100,7 +100,10 @@ const CreateQuestion = ({ ...props }) => {
       <Label text='Choose the type of question' />
 
       <div className={s['select-and-add-option-block']}>
-        <Select onChange={handleChange} />
+        <Select
+          onChange={handleChange}
+          select='single'
+        />
 
         <Button
           onClick={handleAddQuestion}
@@ -111,10 +114,10 @@ const CreateQuestion = ({ ...props }) => {
         />
       </div>
       <AnswerCreator onChange={onChangeQuestionAdder} />
-
+{/* 
       <div>
         <Button onClick={createQuestion} text='Create Question' />
-      </div>
+      </div> */}
     </div>
   );
 };

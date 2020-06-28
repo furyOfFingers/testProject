@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import s from './Select.styl';
 import c from 'classnames';
 
@@ -8,15 +8,24 @@ import c from 'classnames';
 interface ISelectProps {
   /** onChange компонетна Select. */
   onChange?: ((option: string) => void) | any;
+  /** Переданный селект. */
+  select?: string | any;
+  /** Признак отображения заголовка. */
+  head?: boolean;
 }
 
 /**
  * Компонент Select.
  */
-const Select = ({ onChange, }: ISelectProps) => {
+const Select = ({ head, select, onChange }: ISelectProps) => {
   const [isOpenList, setOpenList] = useState(false);
   const [selection, setSelection] = useState('single');
   const items = ['single', 'multiple', 'number'];
+
+  useEffect(() => {
+    setSelection(select);
+    console.log(select, 'props.editData');
+  }, [select]);
 
   /**
    * Метод изменяющий option компонента select.
@@ -29,7 +38,7 @@ const Select = ({ onChange, }: ISelectProps) => {
 
   return (
     <div className={s['custom-select-container']}>
-      {/* <span>choice question type</span> */}
+      { head && <span>choice question type</span>}
 
       <div className={s['select']} onClick={() => setOpenList(!isOpenList)}>
         {selection}
