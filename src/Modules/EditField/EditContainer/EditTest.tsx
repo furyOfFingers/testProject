@@ -3,11 +3,9 @@ import Button from '../../../Components/Button/Button';
 import s from '../EditField.styl';
 import Input from '../../../Components/Input/Input';
 import Label from '../../../Components/Label/Label';
-import Select from '../../../Components/Select/Select';
-import { renderTestEditBody } from '../TableComponents/TestTableBody';
-import { renderQuestionEditBody } from '../TableComponents/QuestionsTableBody';
+import QuestionsTable from '../TableComponents/QuestionsTable';
 
-interface IQuestionEditContainerProps {
+interface IEditTestProps {
   /** Колбэк на изменение наименования теста. */
   handleTitleChange: any;
   /** Колбэк на отмену изменений. */
@@ -16,29 +14,24 @@ interface IQuestionEditContainerProps {
   data: any;
   /** Колбэк на отправку редактирования заголовка теста. */
   onEdit: any;
-  /** Признак редактирования теста или вопроса. */
-  isTest: any;
-  /** Колбэк на изменение значения селекта. */
-  handleSelectChange: any;
-  // /** Признак заблокированной кнопки сохранения изменений. */
-  // disabled: boolean;
+  /** Признак открытия блока редактирования тестов. */
+  isTest?: boolean;
 }
 
-const QuestionEditContainer = ({
+/** Компонент редактирования теста. */
+const EditTest = ({
   handleTitleChange,
   handleResetChange,
   data,
   onEdit,
-  isTest,
-  // disabled
-  handleSelectChange,
-}: IQuestionEditContainerProps) => {
+}: IEditTestProps) => {
   return (
     <div className={s['editable-block']}>
       <Label
         extraClass={[s['extra-label']]}
-        text={`Edit question at number '${data.id}'`}
+        text={`Edit test at number '${data.id}'`}
       />
+
       <Input
         // onBlur={() => onBlurAnswerValidation(i)}
         onChange={(event) => handleTitleChange(event)}
@@ -49,7 +42,7 @@ const QuestionEditContainer = ({
         // showHint={answers[i].isEmptyOption}
         // hint='Enter answer option'
       />
-      <Select head onChange={handleSelectChange} select={data.question_type} />
+
       <div className={s['btns-block']}>
         <Button
           onClick={handleResetChange}
@@ -59,16 +52,16 @@ const QuestionEditContainer = ({
         />
 
         <Button
-          // disabled={disabled}
           onClick={onEdit}
           text='save changes'
           size='small'
           theme='green'
         />
       </div>
-      {isTest ? renderTestEditBody(data) : renderQuestionEditBody(data)}
+
+      <QuestionsTable data={data} />
     </div>
   );
 };
 
-export default QuestionEditContainer;
+export default EditTest;

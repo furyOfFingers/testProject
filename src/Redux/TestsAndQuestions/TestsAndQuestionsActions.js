@@ -6,12 +6,23 @@ import {
  *
  * @param {object} data Данные редактируемого объекта.
  */
-export function openEditFieldAction(data, isOpen, isTest, isAnswerOpen) {
+export function openEditFieldAction(data, isTest, isQuestion) {
+  return {
+    type: OPEN_EDIT_FIELD,
+    data: data,
+    isTest: isTest,
+    isQuestion: isQuestion
+  };
+}
+
+/** Экшен на передачу данных при редактировании ответов.
+ *
+ * @param {object} data Данные редактируемого объекта.
+ */
+export function openEditAnswerAction(data, isOpen) {
   return {
     type: OPEN_EDIT_FIELD,
     data: data,
     isOpen: isOpen,
-    isTest: isTest,
-    isAnswerOpen: isAnswerOpen
   };
 }

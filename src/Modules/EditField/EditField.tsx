@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import s from './EditField.styl';
 import { IAppState } from '../../Types/Types';
 import { IQuestionProps } from '../../Types/Types';
-import TestEditContainer from './EditContainer/TestEditContainer';
-import QuestionEditContainer from './EditContainer/QuestionEditContainer';
+import EditTest from './EditContainer/EditTest';
+import EditQuestion from './EditContainer/EditQuestion';
 import {
   editTestAction,
   getAllTestsAction,
@@ -12,10 +12,10 @@ import {
 import { editQuestionAction } from '../../Redux/Questions/QuestionActions';
 
 interface IEditFieldProps {
-  /** Признак редактирования теста или вопроса. */
-  isTest: boolean;
-  /** Признак открытия блока редактирования ответов. */
-  isAnswer: boolean;
+  /** Признак открытия блока редактирования тестов или ответов. */
+  isTest?: boolean;
+  /** Признак открытия блока редактирования вопросов. */
+  isQuestion?: boolean;
   /** Редактируемые данные. */
   editData: IQuestionProps;
   /** Признак открытия блока редактирования. */
@@ -28,12 +28,12 @@ interface IEditFieldProps {
   editQuestionAction: any;
 }
 
+/** Компонент редактирования элементов. */
 const EditField = ({ ...props }: IEditFieldProps) => {
   const [data, setData] = useState<IQuestionProps | any>({});
 
   useEffect(() => {
     setData(props.editData);
-    console.log(props.editData, 'props.editData');
   }, [props.editData]);
 
   /** Изменяет значение типа вопроса. */
@@ -73,35 +73,35 @@ const EditField = ({ ...props }: IEditFieldProps) => {
     setData({ ...data, title: props.editData.title });
   };
 
-  const renderEditBody = () => {
-    if (props.isTest) {
-      return (
-        <TestEditContainer
-          data={data}
-          isTest={props.isTest}
-          handleTitleChange={handleTitleChange}
-          handleResetChange={handleResetChange}
-          onEdit={onTestEdit}
-        />
-      );
-    } else {
-      return (
-        <QuestionEditContainer
-          data={data}
-          isTest={props.isTest}
-          handleTitleChange={handleTitleChange}
-          handleResetChange={handleResetChange}
-          onEdit={onQuestionEdit}
-          handleSelectChange={handleChange}
-        />
-      );
-    }
+  /** Рендерит блок редактирования тестов */
+  const renderTestEditBody = () => {
+    return (
+      <EditTest
+        data={data}
+        handleTitleChange={handleTitleChange}
+        handleResetChange={handleResetChange}
+        onEdit={onTestEdit}
+      />
+    );
+  };
+
+  /** Рендерит блок редактирования тестов */
+  const renderQuestionEditBody = () => {
+    return (
+      <EditQuestion
+        data={data}
+        handleTitleChange={handleTitleChange}
+        handleResetChange={handleResetChange}
+        onEdit={onQuestionEdit}
+        handleSelectChange={handleChange}
+      />
+    );
   };
 
   return (
     <div className={s['edit-field-container']}>
-      {props.isOpenEditField && renderEditBody()}
-      {props.isAnswer && <span>answer</span>}
+      {props.isTest && renderTestEditBody()}
+      {props.isQuestion && renderQuestionEditBody()}
     </div>
   );
 };
@@ -114,9 +114,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state: IAppState) => ({
   isAdmin: state.authorization.isAdmin,
-  isOpenEditField: state.testsAndQuestions.isOpen,
   isTest: state.testsAndQuestions.isTest,
-  isAnswer: state.testsAndQuestions.isAnswerOpen,
+  isQuestion: state.testsAndQuestions.isQuestion,
   editData: state.testsAndQuestions.data,
 });
 

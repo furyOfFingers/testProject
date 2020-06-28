@@ -10,10 +10,10 @@
  * @prop {string} errorText Текст ошибки компонента layout.
  * @prop {boolean} showError Признак отображения ошибки компонента layout.
  * @prop {boolean} isAdmin Признак наличия прав администратора.
- * @prop {boolean} isOpen Признак открытия блока редактирования.
+ * @prop {boolean} isOpen Признак открытия блока редактирования ответов.
  * @prop {boolean} isTest Признак редактирования теста или вопроса.
  * @prop {boolean} data Данные редактируемого элемента.
- * @prop {boolean} isAnswerOpen Признак открытия блока редактирования ответов.
+ * @prop {boolean} isQuestion Признак открытия блока редактирования вопросов.
  * @prop {string} title Вопрос.
  * @prop {string} createdAt Дата создания вопроса.
  * @prop {number} id Идентификатор вопроса.
@@ -39,9 +39,9 @@ export interface IAppState {
     createdAt: string
   };
   testsAndQuestions: {
-    isOpen: boolean;
     isTest: boolean;
-    isAnswerOpen: boolean;
+    isQuestion: boolean;
+    isOpen: boolean;
     data: any
   }
 }

@@ -30,8 +30,8 @@ export function editAnswerAction(data) {
   return {
     type: EDIT_ANSWER,
     text: data.text,
-    isRight: data.isRight,
-    questionId: data.questionId
+    isRight: data.is_right,
+    questionId: data.id
   };
 }
 

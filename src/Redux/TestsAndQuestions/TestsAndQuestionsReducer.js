@@ -1,9 +1,9 @@
 import { OPEN_EDIT_FIELD } from './Consts';
 
 const initialState = {
-  isOpen: false,
   isTest: false,
-  isAnswerOpen: false,
+  isQuestion: false,
+  isOpen: false,
   data: {},
 };
 
@@ -13,9 +13,9 @@ export const testsAndActionsReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.data,
-        isOpen: action.isOpen,
         isTest: action.isTest,
-        isAnswerOpen: action.isAnswerOpen,
+        isQuestion: action.isQuestion,
+        isOpen: action.isOpen,
       };
     default:
       return state;

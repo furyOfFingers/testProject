@@ -2,23 +2,32 @@ import React, { useState } from 'react';
 import Button from '../../../Components/Button/Button';
 import MWTestAction from '../../MWTestAction/MWTestAction';
 import ModalWindow from '../../../Components/ModalWindow/ModalWindow';
-import s from './TestsAndQuestionsActionsPanel.styl';
+import s from './ActionBar.styl';
 
-interface ITestsAndQuestionsActionsPanelProps {
-  /** Данные теста или вопроса переданные на обработку. */
-  data: any;
-  /** Признак редактирования теста или вопроса. */
+interface IActionBarProps {
+  /** Данные редактируемого элемента. */
+  data?: any;
+  /** Данные ответов */
+  dataAnswer?: any;
+  /** Признак открытия блока редактирования тестов или ответов. */
   isTest?: boolean;
+  /** Признак открытия блока редактирования вопросов. */
+  isQuestion?: boolean;
   /** Признак открытия блока редактирования ответов. */
-  isAnswerOpen?: boolean;
+  isAnswer?: boolean;
+  /** Признак наличия кнопки редактирования. */
+  isEditBtn?: boolean;
+  onEditClick?: any;
 }
 
-const TestsAndQuestionsActionsPanel = ({
+const ActionBar = ({
   data,
   isTest,
-  isAnswerOpen,
-  ...props
-}: ITestsAndQuestionsActionsPanelProps) => {
+  isQuestion,
+  isAnswer,
+  isEditBtn,
+  onEditClick,
+}: IActionBarProps) => {
   const [isMWOpen, setIsMWOpen] = useState(false);
   const [removeOrEdit, setRemoveOrEdit] = useState('');
 
@@ -38,15 +47,17 @@ const TestsAndQuestionsActionsPanel = ({
 
   return (
     <div className={s['create-page-actions-panel']}>
-      <Button
-        name='edit'
-        type='icon'
-        iconName='edit'
-        iconColor='gray'
-        iconWidth='20px'
-        iconHeight='20px'
-        onClick={handleEditEl}
-      />
+      {isEditBtn && (
+        <Button
+          name='edit'
+          type='icon'
+          iconName='edit'
+          iconColor='gray'
+          iconWidth='20px'
+          iconHeight='20px'
+          onClick={handleEditEl}
+        />
+      )}
 
       <Button
         name='remove'
@@ -65,13 +76,15 @@ const TestsAndQuestionsActionsPanel = ({
       >
         <MWTestAction
           isTest={isTest}
+          isQuestion={isQuestion}
           action={removeOrEdit}
+          onEditClick={onEditClick}
+          isAnswer={isAnswer}
           data={data}
           handleCloseMW={handleModalClose}
-          isAnswerOpen={isAnswerOpen}
         />
       </ModalWindow>
     </div>
   );
 };
-export default TestsAndQuestionsActionsPanel;
+export default ActionBar;

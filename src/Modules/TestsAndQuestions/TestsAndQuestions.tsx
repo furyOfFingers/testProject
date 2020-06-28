@@ -3,7 +3,6 @@ import Table from '../../Components/Table/Table';
 import { IAppState } from '../../Types/Types';
 import { connect } from 'react-redux';
 import Button from '../../Components/Button/Button';
-import ModalWindow from '../../Components/ModalWindow/ModalWindow';
 import s from './TestsAndQuestions.styl';
 import {
   createTestAction,
@@ -22,7 +21,7 @@ import { getCurrentUserAction } from '../../Redux/Authorization/AuthorizationAct
 import CreateQuestion from '../CreateQuestion/CreateQuestion';
 import EditField from '../EditField/EditField';
 import Label from '../../Components/Label/Label';
-import TestsAndQuestionsActionsPanel from './ActionsPanel/TestsAndQuestionsActionsPanel';
+import ActionBar from './ActionBar/ActionBar';
 
 const TestsAndQuestions = ({ ...props }) => {
   const tableTestHeader = ['#', 'Test name', 'Time of creation', 'Actions'];
@@ -58,9 +57,10 @@ const TestsAndQuestions = ({ ...props }) => {
           </td>
           <td>{props.test[el].created_at}</td>
           <td>
-            <TestsAndQuestionsActionsPanel
+            <ActionBar
               data={props.test[el]}
               isTest
+              isEditBtn
             />
           </td>
         </tr>
@@ -87,8 +87,10 @@ const TestsAndQuestions = ({ ...props }) => {
             <td>{el.question_type}</td>
             <td>{el.answers.length}</td>
             <td>
-              <TestsAndQuestionsActionsPanel
+              <ActionBar
                 data={el}
+                isQuestion
+                isEditBtn
               />
             </td>
           </tr>

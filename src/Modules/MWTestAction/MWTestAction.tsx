@@ -1,15 +1,14 @@
 import React from 'react';
-import { IAppState } from '../../Types/Types';
 import { connect } from 'react-redux';
 import Button from '../../Components/Button/Button';
 import s from './MWTestAction.styl';
 import {
-  editTestAction,
   deleteTestAction,
   getAllTestsAction,
 } from '../../Redux/Tests/TestsActions';
+import {deleteAnswerAction} from '../../Redux/Answers/AnswerActions';
 import { deleteQuestionAction } from '../../Redux/Questions/QuestionActions';
-import { openEditFieldAction } from '../../Redux/TestsAndQuestions/TestsAndQuestionsActions';
+import { openEditFieldAction, openEditAnswerAction } from '../../Redux/TestsAndQuestions/TestsAndQuestionsActions';
 import Label from '../../Components/Label/Label';
 
 interface IMWTestActionProps {
@@ -17,10 +16,12 @@ interface IMWTestActionProps {
   handleCloseMW: () => void;
   /** Данные теста или вопроса переданные на обработку. */
   data: any;
-  /** Признак редактирования теста или вопроса. */
+  /** Признак открытия блока редактирования тестов. */
   isTest?: boolean;
+  /** Признак открытия блока редактирования вопросов. */
+  isQuestion?: boolean;
   /** Признак открытия блока редактирования ответов. */
-  isAnswerOpen?: boolean;
+  isAnswer?: boolean;
   /** Вид модального окна. */
   action: 'edit' | 'remove';
   /** Экшен на удаление теста. */
@@ -29,33 +30,49 @@ interface IMWTestActionProps {
   getAllTestsAction: any;
   /** Экшен на изменение признака открытия окна редактирования. */
   openEditFieldAction: any;
+  /** Экшен на передачу данных при редактировании ответов. */
+  openEditAnswerAction: any;
   /** Экшен на удаление вопроса. */
   deleteQuestionAction: any;
+  /** Колбэк на отображение блока редактирование ответов. */
+  onEditClick: any;
+  /** Экшен на удаление ответа. */
+  deleteAnswerAction: any;
+
 }
 
 const MWTestAction = ({
   action,
   data,
   isTest,
+  isQuestion,
+  isAnswer,
+  onEditClick,
   handleCloseMW,
-  isAnswerOpen,
   ...props
 }: IMWTestActionProps) => {
   /** Удаление элемента. */
   async function handleRemove() {
-    isTest
+    if(isAnswer) {
+      await props.deleteAnswerAction(data.id);
+    } else {
+      isTest
       ? await props.deleteTestAction(data.id)
       : await props.deleteQuestionAction(data.id);
-    await handleCloseMW();
+      await handleCloseMW();
+    }
     await props.getAllTestsAction();
   }
 
   /** Редактирование элемента. */
   async function handleEdit() {
-    await props.openEditFieldAction(data, true, isTest, isAnswerOpen);
-    // await props.editTestAction(data.id);
+    if(isAnswer) {
+      await onEditClick && onEditClick(data.id)
+    }
+    else {
+      await props.openEditFieldAction(data, isTest, isQuestion);
+    }
     await handleCloseMW();
-    // await props.getAllTestsAction();
   }
 
   const MWText = action === 'edit' ? 'Edit' : 'Remove';
@@ -81,14 +98,12 @@ const MWTestAction = ({
 const mapDispatchToProps = {
   deleteTestAction,
   getAllTestsAction,
-  editTestAction,
   openEditFieldAction,
   deleteQuestionAction,
+  openEditAnswerAction,
+  deleteAnswerAction
 };
 
-const mapStateToProps = (state: IAppState) => ({
-  isAdmin: state.authorization.isAdmin,
-  test: state.test,
-});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MWTestAction);
