@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../../Components/Button/Button';
 import s from '../EditField.styl';
 import Input from '../../../Components/Input/Input';
@@ -15,12 +15,8 @@ interface IEditQuestionProps {
   data: any;
   /** Колбэк на отправку редактирования заголовка теста. */
   onEdit: any;
-  /** Признак открытия блока редактирования вопросов. */
-  isQuestion?: boolean;
   /** Колбэк на изменение значения селекта. */
   handleSelectChange: any;
-  // /** Признак заблокированной кнопки сохранения изменений. */
-  // disabled: boolean;
 }
 
 /** Компонент редактирования вопроса. */
@@ -31,23 +27,32 @@ const EditQuestion = ({
   onEdit,
   handleSelectChange,
 }: IEditQuestionProps) => {
+  const [disable, setDisable] = useState(false);
+
+  /** Валидирует изменения. */
+  const onBlurQuestionValidation = () => {
+    if (data.title === '') {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  };
   return (
     <div className={s['editable-block']}>
       <Label
         extraClass={[s['extra-label']]}
         text={`Edit question at number '${data.id}'`}
       />
+
       <Input
-        // onBlur={() => onBlurAnswerValidation(i)}
+        onBlur={onBlurQuestionValidation}
         onChange={(event) => handleTitleChange(event)}
         value={data.title || ''}
-        name='testEdit'
-        // placeholder='Enter answer option'
-        // error={answers[i].isEmptyOption}
-        // showHint={answers[i].isEmptyOption}
-        // hint='Enter answer option'
+        placeholder='Enter question option'
       />
+
       <Select head onChange={handleSelectChange} select={data.question_type} />
+
       <div className={s['btns-block']}>
         <Button
           onClick={handleResetChange}
@@ -57,7 +62,7 @@ const EditQuestion = ({
         />
 
         <Button
-          // disabled={disabled}
+          disabled={disable}
           onClick={onEdit}
           text='save changes'
           size='small'

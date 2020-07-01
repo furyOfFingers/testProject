@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import s from '../EditField.styl';
 import Label from '../../../Components/Label/Label';
 import ActionBar from '../../TestsAndQuestions/ActionBar/ActionBar';
 import Table from '../../../Components/Table/Table';
-import { IAppState } from '../../../Types/Types';
 import AnswerEditContainer from '../EditContainer/AnswerEditContainer';
 
 interface IEditFieldProps {
@@ -13,7 +11,7 @@ interface IEditFieldProps {
 }
 
 /** Компонент ответов к редактируемому вопросу. */
-const AnswersTable = ({ data, ...props }: IEditFieldProps) => {
+const AnswersTable = ({ data }: IEditFieldProps) => {
   const [show, setShow] = useState(false);
   const [editData, setEditData] = useState({});
 
@@ -37,28 +35,18 @@ const AnswersTable = ({ data, ...props }: IEditFieldProps) => {
   /** Отображает блок редактирования ответа. */
   const showEditBlock = (id: number) => {
     data.answers.map((answer: any) => {
-      if(answer.id === id) {
-          // console.log(answer)
-          setEditData(answer);
+      if (answer.id === id) {
+        setEditData(answer);
       }
-  })
+    });
     setShow(true);
-  };
-
-  const onAnswerClick = (answer: any) => {
-    console.log(answer, 'answer');
   };
 
   /** Рендерит ответы к редактируемому вопросу. */
   const renderQuestionTableBody = () => {
     return data.answers.map((answer: any, key: any) => {
       return (
-        <tr
-          onClick={() => {
-            onAnswerClick(answer);
-          }}
-          key={key}
-        >
+        <tr key={key}>
           <td>{answer.id}</td>
           <td className={s['data-body-title']}>{answer.text}</td>
           <td>{answer.is_right && <span>True</span>}</td>
@@ -97,10 +85,4 @@ const AnswersTable = ({ data, ...props }: IEditFieldProps) => {
   );
 };
 
-const mapDispatchToProps = {};
-
-const mapStateToProps = (state: IAppState) => ({
-  isOpen: state.testsAndQuestions.isOpen,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AnswersTable);
+export default AnswersTable;

@@ -49,18 +49,22 @@ export interface IAppState {
 /**
  * Интерфейс блока вопроса.
  *
- * @prop {boolean} isAnswer Признак правильного варианта ответа на вопрос.
- * @prop {boolean} versionAnswer Вариант ответа на вопрос.
+ * @prop {boolean} isRight Признак правильного варианта ответа на вопрос.
+ * @prop {boolean} text Вариант ответа на вопрос.
  * @prop {boolean} isEdit Признак возможности редактирования варианта ответа.
  * @prop {boolean} isEmptyOption Признак пустого поля варианта ответа.
  * @prop {number} questionId Идентификатор вопроса, в который добавляем вариант ответа.
+ * @prop {boolean} disabled Признак заблокированности кнопки сохранить.
+ * @prop {number} answerId Идентификатор ответа.
  */
 export interface IAnswerProps {
-  isAnswer: boolean;
-  versionAnswer: string;
+  isRight: boolean;
+  text: string;
   isEdit: boolean;
   isEmptyOption: boolean;
-  questionId: number
+  questionId: number;
+  disabled: boolean;
+  answerId: number;
 }
 
 /**

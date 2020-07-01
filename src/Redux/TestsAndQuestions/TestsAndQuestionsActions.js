@@ -15,14 +15,13 @@ export function openEditFieldAction(data, isTest, isQuestion) {
   };
 }
 
-/** Экшен на передачу данных при редактировании ответов.
- *
- * @param {object} data Данные редактируемого объекта.
- */
-export function openEditAnswerAction(data, isOpen) {
-  return {
-    type: OPEN_EDIT_FIELD,
-    data: data,
-    isOpen: isOpen,
-  };
-}
+// /** Экшен на передачу данных при редактировании ответов.
+//  *
+//  * @param {object} data Данные редактируемого объекта.
+//  */
+// export function elClickAction(id) {
+//   return {
+//     type: OPEN_EDIT_FIELD,
+//     id: id,
+//   };
+// }

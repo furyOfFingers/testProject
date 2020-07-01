@@ -28,8 +28,8 @@ interface IQuestionAdderProps {
  */
 const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
   const newAnswer: IAnswerProps = {
-    isAnswer: false,
-    versionAnswer: '',
+    isRight: false,
+    text: '',
     isEdit: false,
     isEmptyOption: false,
     questionId: 342
@@ -45,14 +45,14 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
     i: number
   ) => {
     const updatedAnswers = [...answers];
-    updatedAnswers[i].versionAnswer = event.target.value;
+    updatedAnswers[i].text = event.target.value;
     setAnswer(updatedAnswers);
   };
 
   /** Проверяет новый ответ на пустую строку. */
   const onBlurAnswerValidation = (i: number) => {
     const updatedAnswers = [...answers];
-    if (answers[i].versionAnswer == '') {
+    if (answers[i].text == '') {
       updatedAnswers[i].isEmptyOption = true;
       setDisabled(true);
     } else {
@@ -67,9 +67,9 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
     event: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    answers.map((el) => (el.isAnswer = false));
+    answers.map((el) => (el.isRight = false));
     const updatedAnswers = [...answers];
-    updatedAnswers[i].isAnswer = event.currentTarget.checked;
+    updatedAnswers[i].isRight = event.currentTarget.checked;
     setAnswer(updatedAnswers);
     onChange(answers);
   };
@@ -83,7 +83,7 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
     // };
     onBlurAnswerValidation(answers.length - 1);
     // const updatedAnswers = [...answers];
-    if (answers[answers.length - 1].versionAnswer == '') {
+    if (answers[answers.length - 1].text == '') {
       console.log('insert answer');
     } else {
       props.createAnswerAction(answers[answers.length - 1]);
@@ -100,11 +100,11 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
     if (answers.length === 1) return false;
     const updatedAnswers = [...answers];
     // if (updatedAnswers[i].isEdit) {
-    //   const prevValue = usePrevious(updatedAnswers[i].versionAnswer);
+    //   const prevValue = usePrevious(updatedAnswers[i].text);
     //   updatedAnswers[i].isEdit = false;
     //   updatedAnswers.splice(i, 1);
-    //   // updatedAnswers[i].versionAnswer = questions[i].versionAnswer;
-    //   updatedAnswers[i].versionAnswer = prevValue as string | any;
+    //   // updatedAnswers[i].text = questions[i].text;
+    //   updatedAnswers[i].text = prevValue as string | any;
     //   console.log(0);
     // } else {
     //   updatedAnswers[i].isEdit = true;
@@ -135,7 +135,7 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
             id='radioButton'
             onChange={(event) => handleChangeRadioButton(event, i)}
             extraClass={[s['extra-radio-button']]}
-            checked={answers[i].isAnswer}
+            checked={answers[i].isRight}
           />
           {/* <span>{i}</span> */}
 
@@ -143,9 +143,9 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
           <Input
             onBlur={() => onBlurAnswerValidation(i)}
             onChange={(event) => handleChangeAnswer(event, i)}
-            value={answers[i].versionAnswer}
+            value={answers[i].text}
             extraClass={[s['extra-input']]}
-            name='versionAnswer'
+            name='text'
             placeholder='Enter answer option'
             error={answers[i].isEmptyOption}
             showHint={answers[i].isEmptyOption}
@@ -153,7 +153,7 @@ const AnswerCreator = ({ onChange, ...props }: IQuestionAdderProps) => {
           />
           {/* ) : (
             <span className={s['not-editable-span']}>
-              {answers[i].versionAnswer}
+              {answers[i].text}
             </span>
           )}
 

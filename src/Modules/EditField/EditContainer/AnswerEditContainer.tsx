@@ -4,15 +4,17 @@ import Button from '../../../Components/Button/Button';
 import s from '../EditField.styl';
 import Input from '../../../Components/Input/Input';
 import Label from '../../../Components/Label/Label';
-import RadioButton from '../../../Components/RadioButton/RadioButton';
 import Checkbox from '../../../Components/Checkbox/Checkbox';
 import { editAnswerAction } from '../../../Redux/Answers/AnswerActions';
+import {getAllTestsAction} from '../../../Redux/Tests/TestsActions';
 
 interface IAnswerEditContainerProps {
   /** Данные редактируемого элемента */
   editData: any;
   /** Экшен на редактирование ответа. */
   editAnswerAction: any;
+  /** Экшен на получение списка тестов. */
+  getAllTestsAction: any;
 }
 
 /** Компонент редактирования ответа. */
@@ -21,7 +23,7 @@ const AnswerEditContainer = ({
   ...props
 }: IAnswerEditContainerProps) => {
   const [data, setData] = useState<any | any>({});
-  const [disable, setDisable] = useState<any | any>(false);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     setData(editData);
@@ -47,8 +49,9 @@ const AnswerEditContainer = ({
   };
 
   /** Редактирует тесты. */
-  async function onEdit() {
+  const onEdit = () => {
     props.editAnswerAction(data);
+    props.getAllTestsAction();
   }
 
   /** Изменяет значение верности ответа. */
@@ -102,6 +105,7 @@ const AnswerEditContainer = ({
 
 const mapDispatchToProps = {
   editAnswerAction,
+  getAllTestsAction
 };
 
 const mapStateToProps = () => ({});

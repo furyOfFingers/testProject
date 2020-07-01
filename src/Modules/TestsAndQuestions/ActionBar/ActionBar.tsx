@@ -7,8 +7,6 @@ import s from './ActionBar.styl';
 interface IActionBarProps {
   /** Данные редактируемого элемента. */
   data?: any;
-  /** Данные ответов */
-  dataAnswer?: any;
   /** Признак открытия блока редактирования тестов или ответов. */
   isTest?: boolean;
   /** Признак открытия блока редактирования вопросов. */
@@ -17,9 +15,11 @@ interface IActionBarProps {
   isAnswer?: boolean;
   /** Признак наличия кнопки редактирования. */
   isEditBtn?: boolean;
+  /** Колбэк на редактирование ответа. */
   onEditClick?: any;
 }
 
+/** Экшен панель таблицы элементов. */
 const ActionBar = ({
   data,
   isTest,

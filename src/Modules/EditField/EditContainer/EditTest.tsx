@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../../Components/Button/Button';
 import s from '../EditField.styl';
 import Input from '../../../Components/Input/Input';
@@ -14,8 +14,6 @@ interface IEditTestProps {
   data: any;
   /** Колбэк на отправку редактирования заголовка теста. */
   onEdit: any;
-  /** Признак открытия блока редактирования тестов. */
-  isTest?: boolean;
 }
 
 /** Компонент редактирования теста. */
@@ -25,6 +23,17 @@ const EditTest = ({
   data,
   onEdit,
 }: IEditTestProps) => {
+  const [disable, setDisable] = useState(false);
+
+  /** Валидирует изменения. */
+  const onBlurTestValidation = () => {
+    if (data.title === '') {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  };
+
   return (
     <div className={s['editable-block']}>
       <Label
@@ -33,14 +42,10 @@ const EditTest = ({
       />
 
       <Input
-        // onBlur={() => onBlurAnswerValidation(i)}
+        onBlur={onBlurTestValidation}
         onChange={(event) => handleTitleChange(event)}
         value={data.title || ''}
-        name='testEdit'
-        // placeholder='Enter answer option'
-        // error={answers[i].isEmptyOption}
-        // showHint={answers[i].isEmptyOption}
-        // hint='Enter answer option'
+        placeholder='Enter test option'
       />
 
       <div className={s['btns-block']}>
@@ -52,6 +57,7 @@ const EditTest = ({
         />
 
         <Button
+          disabled={disable}
           onClick={onEdit}
           text='save changes'
           size='small'

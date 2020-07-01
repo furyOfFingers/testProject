@@ -18,8 +18,6 @@ interface IEditFieldProps {
   isQuestion?: boolean;
   /** Редактируемые данные. */
   editData: IQuestionProps;
-  /** Признак открытия блока редактирования. */
-  isOpenEditField: boolean;
   /** Экшен на редактирование теста */
   editTestAction: any;
   /** Экшен на получение списка тестов. */
@@ -70,7 +68,7 @@ const EditField = ({ ...props }: IEditFieldProps) => {
   }
 
   const handleResetChange = () => {
-    setData({ ...data, title: props.editData.title });
+    setData({ ...props.editData });
   };
 
   /** Рендерит блок редактирования тестов */
@@ -113,7 +111,6 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state: IAppState) => ({
-  isAdmin: state.authorization.isAdmin,
   isTest: state.testsAndQuestions.isTest,
   isQuestion: state.testsAndQuestions.isQuestion,
   editData: state.testsAndQuestions.data,

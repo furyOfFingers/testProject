@@ -24,7 +24,6 @@ const Select = ({ head, select, onChange }: ISelectProps) => {
 
   useEffect(() => {
     setSelection(select);
-    console.log(select, 'props.editData');
   }, [select]);
 
   /**

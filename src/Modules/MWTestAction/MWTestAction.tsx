@@ -6,9 +6,9 @@ import {
   deleteTestAction,
   getAllTestsAction,
 } from '../../Redux/Tests/TestsActions';
-import {deleteAnswerAction} from '../../Redux/Answers/AnswerActions';
+import { deleteAnswerAction } from '../../Redux/Answers/AnswerActions';
 import { deleteQuestionAction } from '../../Redux/Questions/QuestionActions';
-import { openEditFieldAction, openEditAnswerAction } from '../../Redux/TestsAndQuestions/TestsAndQuestionsActions';
+import { openEditFieldAction } from '../../Redux/TestsAndQuestions/TestsAndQuestionsActions';
 import Label from '../../Components/Label/Label';
 
 interface IMWTestActionProps {
@@ -30,17 +30,15 @@ interface IMWTestActionProps {
   getAllTestsAction: any;
   /** Экшен на изменение признака открытия окна редактирования. */
   openEditFieldAction: any;
-  /** Экшен на передачу данных при редактировании ответов. */
-  openEditAnswerAction: any;
   /** Экшен на удаление вопроса. */
   deleteQuestionAction: any;
   /** Колбэк на отображение блока редактирование ответов. */
   onEditClick: any;
   /** Экшен на удаление ответа. */
   deleteAnswerAction: any;
-
 }
 
+/** Модальное окно взаимодействия с жлементамиэ */
 const MWTestAction = ({
   action,
   data,
@@ -53,25 +51,25 @@ const MWTestAction = ({
 }: IMWTestActionProps) => {
   /** Удаление элемента. */
   async function handleRemove() {
-    if(isAnswer) {
+    if (isAnswer) {
       await props.deleteAnswerAction(data.id);
     } else {
       isTest
-      ? await props.deleteTestAction(data.id)
-      : await props.deleteQuestionAction(data.id);
-      await handleCloseMW();
+        ? await props.deleteTestAction(data.id)
+        : await props.deleteQuestionAction(data.id);
     }
+    await handleCloseMW();
     await props.getAllTestsAction();
   }
 
   /** Редактирование элемента. */
   async function handleEdit() {
-    if(isAnswer) {
-      await onEditClick && onEditClick(data.id)
-    }
-    else {
+    if (isAnswer) {
+      (await onEditClick) && onEditClick(data.id);
+    } else {
       await props.openEditFieldAction(data, isTest, isQuestion);
     }
+    await props.getAllTestsAction();
     await handleCloseMW();
   }
 
@@ -100,8 +98,7 @@ const mapDispatchToProps = {
   getAllTestsAction,
   openEditFieldAction,
   deleteQuestionAction,
-  openEditAnswerAction,
-  deleteAnswerAction
+  deleteAnswerAction,
 };
 
 const mapStateToProps = () => ({});

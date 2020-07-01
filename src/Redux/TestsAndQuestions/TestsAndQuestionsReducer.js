@@ -3,7 +3,7 @@ import { OPEN_EDIT_FIELD } from './Consts';
 const initialState = {
   isTest: false,
   isQuestion: false,
-  isOpen: false,
+  actualId: 0,
   data: {},
 };
 
@@ -15,8 +15,12 @@ export const testsAndActionsReducer = (state = initialState, action) => {
         data: action.data,
         isTest: action.isTest,
         isQuestion: action.isQuestion,
-        isOpen: action.isOpen,
       };
+    // case OPEN_EDIT_FIELD:
+    //   return {
+    //     ...state,
+    //     actualId: action.id,
+    //   };
     default:
       return state;
   }
