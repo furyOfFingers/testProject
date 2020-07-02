@@ -6,6 +6,7 @@ import { getAllTestsAction } from '../../../Redux/Tests/TestsActions';
 import {
   createAnswerAction,
   deleteAnswerAction,
+  editAnswerAction,
 } from '../../../Redux/Answers/AnswerActions';
 import Label from '../../../Components/Label/Label';
 import Input from '../../../Components/Input/Input';
@@ -31,6 +32,8 @@ interface IQuestionProps {
   deleteAnswerAction: any;
   /** Тип вопроса. */
   questionType: string;
+  /** Экшен на редактирование ответа. */
+  editAnswerAction: any;
 }
 
 /** Компонент создания ответа. */
@@ -51,8 +54,8 @@ const Question = ({
     answerId: 0,
   };
 
-  const [answers, setAnswer] = useState([{ ...newAnswer } as IAnswerProps]);
-  const [disabled, setDisabled] = useState(true);
+  const [answers, setAnswer] = useState([{} as IAnswerProps]);
+  const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState('');
   // const [answerForm, setAnswerForm] = useState({
   //   text: '',
@@ -60,26 +63,25 @@ const Question = ({
   //   questionId: 0,
   // });
 
-  useEffect(() => {
-    if (dataByClick.name === 'auto' || dataByClick.name === 'question') {
-      return initialSetState();
-    }
+  // useEffect(() => {
+  //   if (dataByClick.name === 'auto' || dataByClick.name === 'question') {
+  //     return initialSetState();
+  //   }
+  // }, [dataByClick]);
 
-  }, [dataByClick]);
+  // /** Устанавливает начальное значение. */
+  // const initialSetState = () => {
+  //   const updatedAnswers = [...answers];
+  //   newAnswer.questionId = dataByClick.id;
+  //   newAnswer.answerId = getLastAnswerId() + 1;
+  //   updatedAnswers[0].questionId = dataByClick.id;
+  //   updatedAnswers[0].answerId = getLastAnswerId() + 1;
+  //   // console.log(updatedAnswers, 'updatedAnswers')
+  //   // console.log(newAnswer, 'newAnswer')
+  //   setAnswer(updatedAnswers);
+  // };
 
-  /** Устанавливает начальное значение. */
-  const initialSetState = () => {
-    const updatedAnswers = [...answers];
-    newAnswer.questionId = dataByClick.id
-    newAnswer.answerId = getLastAnswerId() + 1
-    updatedAnswers[0].questionId = dataByClick.id;
-    updatedAnswers[0].answerId = getLastAnswerId() + 1;
-    // console.log(updatedAnswers, 'updatedAnswers')
-    // console.log(newAnswer, 'newAnswer')
-    setAnswer(updatedAnswers);
-
-  };
-
+  /**  Возвращает идентификатор последнего вопроса. */
   const getLastAnswerId = () => {
     let answerId = [] as any;
     actualAnswers.map((el: any) => {
@@ -121,24 +123,32 @@ const Question = ({
   //   setAnswer(updatedAnswers);
   // };
 
-  /** Добавляет варианта ответа. */
-  const handleAddOption = () => {
+  /** Проверяет на наличие редактируемых полей. */
+  const getAtLeastOnceIsEdit = () => {
     let atLeastOnce = false;
     answers.map((el) => {
       if (el.isEdit) {
         atLeastOnce = true;
       }
     });
+    return atLeastOnce;
+  };
 
-    if (atLeastOnce) {
+  /** Добавляет варианта ответа. */
+  const handleAddOption = () => {
+    if (JSON.stringify(answers[0]) === '{}') {
+      answers.splice(0, 1);
+    }
+
+    if (getAtLeastOnceIsEdit()) {
       setError('Save unsaved changes');
       setTimeout(() => setError(''), 3000);
     } else {
       const answer = { ...newAnswer };
       answer.questionId = dataByClick.id;
-      answer.answerId = answers[answers.length - 1].answerId + 1;
-      // console.log(answer, 'answerhandleAdd')
-      console.log(getLastAnswerId(), 'getLastAnswerId()')
+      answer.answerId = getLastAnswerId();
+      console.log(answer, 'answerhandleAdd');
+      console.log(getLastAnswerId(), 'getLastAnswerId()');
       setAnswer([...answers, { ...answer }]);
     }
 
@@ -182,25 +192,33 @@ const Question = ({
     } else {
       updatedAnswers[i].text = event.target.value;
     }
-    console.log(answers, 'handleChangeAnswer answers')
-    console.log(newAnswer, 'handleChangeAnswer newAnswer')
+    // console.log(answers, 'handleChangeAnswer answers');
+    // console.log(newAnswer, 'handleChangeAnswer newAnswer');
     setAnswer(updatedAnswers);
   };
 
   /** Меняет состояние поля для редактирования. */
   const handleEdit = (i: number) => {
-    const updatedAnswers = [...answers];
-    if (updatedAnswers[i].isEdit) {
-      updatedAnswers[i].isEdit = false;
+    if (getAtLeastOnceIsEdit()) {
+      setError('Save unsaved changes');
+      setTimeout(() => setError(''), 3000);
     } else {
+      setIsEdit(true);
+      const updatedAnswers = [...answers];
+      // if (updatedAnswers[i].isEdit) {
+      //   updatedAnswers[i].isEdit = false;
+      // } else {
       updatedAnswers[i].isEdit = true;
+      // }
+      setAnswer(updatedAnswers);
     }
-    setAnswer(updatedAnswers);
   };
 
   /** Сохраняет изменения ответа. */
-  const handleSave = (i: number) => {
+  const handleSave = (i: number, answerId: number) => {
+    console.log(i, 'handleSave');
     const updatedAnswers = [...answers];
+
     if (answers[i].text === '') {
       updatedAnswers[i].isEdit = true;
       updatedAnswers[i].isEmptyOption = true;
@@ -222,8 +240,7 @@ const Question = ({
   };
 
   /** Удаляет вариант ответа. */
-  const handleDelete = (i: number) => {
-    if (answers.length === 1) return false;
+  const handleDelete = (i: number, answerId: number): any => {
     const updatedAnswers = [...answers];
     // if (updatedAnswers[i].isEdit) {
     //   const prevValue = usePrevious(updatedAnswers[i].text);
@@ -234,26 +251,12 @@ const Question = ({
     // } else {
     //   updatedAnswers[i].isEdit = true;
     // }
-    props.deleteAnswerAction(answers[i].answerId);
+    props.deleteAnswerAction(answerId);
     updatedAnswers.splice(i, 1);
     setAnswer(updatedAnswers);
-    console.log(answers[i], 'answer');
-    // onChange(answers);
   };
 
-  /** Отправляет заголовок на создание теста. */
-  async function handleCreateAnswer() {
-    // if (actualId.name === 'test' && answerForm.questionId !== 0) {
-    //   await setAnswerForm({ ...answerForm, questionId: actualId.id });
-    //   await props.createAnswerAction(answerForm);
-    //   await props.getAllTestsAction();
-    // } else {
-    //   setShowError(true);
-    //   setTimeout(() => setShowError(false), 3000);
-    // }
-  }
-
-  const renderEdit = (i: number) => {
+  const renderEdit = (i: number, answerId: number) => {
     return (
       <>
         <Button
@@ -265,7 +268,7 @@ const Question = ({
         />
 
         <Button
-          onClick={() => handleDelete(i)}
+          onClick={() => handleDelete(i, answerId)}
           theme='red'
           text='delete'
           size='small'
@@ -274,13 +277,13 @@ const Question = ({
     );
   };
 
-  const renderSave = (i: number) => {
+  const renderSave = (i: number, answerId: number) => {
     return (
       <>
         <Button
           disabled={answers[i].disabled}
           name='save'
-          onClick={() => handleSave(i)}
+          onClick={() => handleSave(i, answerId)}
           theme='green'
           text='save'
           size='small'
@@ -298,6 +301,8 @@ const Question = ({
 
   /** render блока ответов. */
   const answerFormRender = () => {
+    if (JSON.stringify(answers[0]) === '{}') return false;
+
     return answers.map((el, i: any) => {
       return (
         <div key={i} className={s['answer-field']}>
@@ -326,7 +331,9 @@ const Question = ({
           )}
 
           <div className={s['button-block']}>
-            {el.isEdit ? renderSave(i) : renderEdit(i)}
+            {el.isEdit
+              ? renderSave(i, el.answerId)
+              : renderEdit(i, el.answerId)}
           </div>
         </div>
       );
@@ -372,6 +379,7 @@ const mapDispatchToProps = {
   getAllTestsAction,
   createAnswerAction,
   deleteAnswerAction,
+  editAnswerAction,
 };
 
 const mapStateToProps = () => ({});
